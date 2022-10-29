@@ -1,95 +1,101 @@
 #pragma once
-#include <string>
-#include <memory>
-#include <vector>
-#include <tuple>
 #include <array>
-#include <optional>
 #include <chrono>
+#include <memory>
+#include <optional>
+#include <string>
+#include <tuple>
+#include <vector>
 
 namespace ORB_SLAM3
 {
-    class System;
+class System;
 }
 
 namespace android_slam
 {
 
-    struct Image
-    {
-        std::vector<uint8_t> data;
-        int64_t time_stamp;
+struct Image
+{
+    std::vector<uint8_t> data;
+    int64_t              time_stamp;
 
-        Image() noexcept = default;
-        Image(std::vector<uint8_t> data, int64_t time_stamp) noexcept
-            : data(std::move(data))
-            , time_stamp(time_stamp)
-        {}
+    Image() noexcept = default;
+    Image(std::vector<uint8_t> data, int64_t time_stamp) noexcept
+        : data(std::move(data)), time_stamp(time_stamp)
+    {
+    }
+};
+
+struct ImuPoint
+{
+    float   ax;
+    float   ay;
+    float   az;
+    float   wx;
+    float   wy;
+    float   wz;
+    int64_t time_stamp;
+
+    ImuPoint() noexcept = default;
+    ImuPoint(float   ax,
+             float   ay,
+             float   az,
+             float   wx,
+             float   wy,
+             float   wz,
+             int64_t time_stamp) noexcept
+        : ax(ax), ay(ay), az(az), wx(wx), wy(wy), wz(wz), time_stamp(time_stamp)
+    {
+    }
+};
+
+struct TrackingResult
+{
+    struct Pos
+    {
+        float x;
+        float y;
+        float z;
     };
 
-    struct ImuPoint
-    {
-        float ax;
-        float ay;
-        float az;
-        float wx;
-        float wy;
-        float wz;
-        int64_t time_stamp;
+    std::array<float, 16> last_pose;
+    std::vector<Pos>      trajectory;
+    std::vector<Pos>      map_points;
+    std::string           tracking_status;
 
-        ImuPoint() noexcept = default;
-        ImuPoint(float ax, float ay, float az, float wx, float wy, float wz, int64_t time_stamp) noexcept
-            : ax(ax)
-            , ay(ay)
-            , az(az)
-            , wx(wx)
-            , wy(wy)
-            , wz(wz)
-            , time_stamp(time_stamp)
-        {}
-    };
+    float processing_delta_time;
+};
 
-    struct TrackingResult
-    {
-        struct Pos
-        {
-            float x;
-            float y;
-            float z;
-        };
+class SlamKernel
+{
+private:
+    static constexpr int64_t k_nano_second_in_one_second = 1000000000;
+    static constexpr double  k_nano_sec_to_sec_radio =
+        1.0 / (double)(k_nano_second_in_one_second);
 
-        std::array<float, 16> last_pose;
-        std::vector<Pos> trajectory;
-        std::vector<Pos> map_points;
-        std::string tracking_status;
+public:
+    SlamKernel(int32_t     img_width,
+               int32_t     img_height,
+               std::string vocabulary_data,
+               int64_t     begin_time_stamp);
+    SlamKernel(const SlamKernel&)            = delete;
+    SlamKernel& operator=(const SlamKernel&) = delete;
+    ~SlamKernel();
 
-        float processing_delta_time;
-    };
+    TrackingResult handleData(const std::vector<Image>&    images,
+                              const std::vector<ImuPoint>& imus);
 
-    class SlamKernel
-    {
-    private:
-        static constexpr int64_t k_nano_second_in_one_second = 1000000000;
-        static constexpr double k_nano_sec_to_sec_radio = 1.0 / (double)(k_nano_second_in_one_second);
+    void reset();
 
-    public:
-        SlamKernel(int32_t img_width, int32_t img_height, std::string vocabulary_data, int64_t begin_time_stamp);
-        SlamKernel(const SlamKernel&) = delete;
-        SlamKernel& operator=(const SlamKernel&) = delete;
-        ~SlamKernel();
+private:
+    int32_t       m_width;
+    int32_t       m_height;
+    const int64_t m_begin_time_stamp;
 
-        TrackingResult handleData(const std::vector<Image>& images, const std::vector<ImuPoint>& imus);
+    std::unique_ptr<::ORB_SLAM3::System> m_orb_slam;
 
-        void reset();
+    std::chrono::steady_clock::time_point m_last_time;
+};
 
-    private:
-        int32_t m_width;
-        int32_t m_height;
-        const int64_t m_begin_time_stamp;
-
-        std::unique_ptr<::ORB_SLAM3::System> m_orb_slam;
-
-        std::chrono::steady_clock::time_point m_last_time;
-    };
-
-}
+}  // namespace android_slam
