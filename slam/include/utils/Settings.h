@@ -18,10 +18,9 @@
 
 #ifndef ORB_SLAM3_SETTINGS_H
 #define ORB_SLAM3_SETTINGS_H
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
 #include <string>
+#include <optional>
 
 #include "camera_models/GeometricCamera.h"
 

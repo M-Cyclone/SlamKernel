@@ -2,6 +2,19 @@ cmake_minimum_required(VERSION 3.16)
 
 project(orbslam3)
 
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+    set(CXX_STANDARD 20)
+    set(CXX_STANDARD_REQUIRED ON)
+    set(CXX_EXTENSIONS OFF)
+
+    add_subdirectory(./external/DBoW2)
+    add_subdirectory(./external/g2o)
+    add_subdirectory(./external/Sophus)
+
+    find_package(Eigen3 3 REQUIRED)
+    find_package(OpenCV 4 REQUIRED)
+
     # orbslam3
     file(GLOB slam_camera_files  CONFIGURE_DEPENDS ./include/camera_models/*.h ./src/camera_models/*.cpp)
     file(GLOB slam_core_files    CONFIGURE_DEPENDS ./include/core/*.h ./src/core/*.cpp)
@@ -24,32 +37,14 @@ project(orbslam3)
     )
     target_include_directories(${PROJECT_NAME}
         PRIVATE ./include
-        PRIVATE ../external/eigen3
-        PRIVATE ../external/eigen3
-        PRIVATE ../external/DBoW2
-        PRIVATE ../external/g2o
-        PRIVATE ../external/Sophus
+        PUBLIC  ./external/DBoW2
+        PUBLIC  ./external/g2o
+        PUBLIC  ./external/Sophus
+        PUBLIC  ${OpenCV_INCLUDE_DIR}
     )
     target_link_libraries(${PROJECT_NAME}
         ${OpenCV_LIBS}
         g2o
         DBoW2
-        Sophus
-    )
-
-
-    add_library(slam_kernel SHARED
-        ./interface/SlamKernel.h
-        ./interface/SlamKernel.cpp
-    )
-    target_include_directories(slam_kernel
-        PRIVATE ./include
-        PRIVATE ../external/eigen3
-        PRIVATE ../external/DBoW2
-        PRIVATE ../external/g2o
-        PRIVATE ../external/Sophus
-        PUBLIC ./interface
-    )
-    target_link_libraries(slam_kernel
-        orbslam3
+        Eigen3::Eigen
     )

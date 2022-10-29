@@ -14,10 +14,10 @@ namespace android_slam
 {
 
     SlamKernel::SlamKernel(int32_t img_width, int32_t img_height, std::string vocabulary_data, int64_t begin_time_stamp)
-    : m_width(img_width)
-    , m_height(img_height)
-    , m_begin_time_stamp(begin_time_stamp)
-    , m_last_time(std::chrono::steady_clock::now())
+        : m_width(img_width)
+        , m_height(img_height)
+        , m_begin_time_stamp(begin_time_stamp)
+        , m_last_time(std::chrono::steady_clock::now())
     {
         ORB_SLAM3::Settings::SettingDesc desc{};
         desc.sensor = ORB_SLAM3::System::eSensor::IMU_MONOCULAR;
@@ -64,7 +64,8 @@ namespace android_slam
 
 
         auto vocabulary = new ::ORB_SLAM3::ORBVocabulary();
-        vocabulary->loadFromAndroidTextFile(std::move(vocabulary_data));
+        // vocabulary->loadFromAndroidTextFile(std::move(vocabulary_data));
+        vocabulary->loadFromTextFile(std::move(vocabulary_data));
 
 
         m_orb_slam = std::make_unique<::ORB_SLAM3::System>(
