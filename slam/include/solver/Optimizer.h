@@ -86,27 +86,28 @@ public:
     // if bFixScale is true, 6DoF optimization (stereo,rgbd), 7DoF otherwise
     // (mono)
     void static OptimizeEssentialGraph(
-        Map                                    *pMap,
-        KeyFrame                               *pLoopKF,
-        KeyFrame                               *pCurKF,
-        const LoopClosing::KeyFrameAndPose     &NonCorrectedSim3,
-        const LoopClosing::KeyFrameAndPose     &CorrectedSim3,
-        const map<KeyFrame *, set<KeyFrame *>> &LoopConnections,
-        const bool                             &bFixScale);
-    void static OptimizeEssentialGraph(KeyFrame           *pCurKF,
-                                       vector<KeyFrame *> &vpFixedKFs,
-                                       vector<KeyFrame *> &vpFixedCorrectedKFs,
-                                       vector<KeyFrame *> &vpNonFixedKFs,
-                                       vector<MapPoint *> &vpNonCorrectedMPs);
+        Map                                              *pMap,
+        KeyFrame                                         *pLoopKF,
+        KeyFrame                                         *pCurKF,
+        const LoopClosing::KeyFrameAndPose               &NonCorrectedSim3,
+        const LoopClosing::KeyFrameAndPose               &CorrectedSim3,
+        const std::map<KeyFrame *, std::set<KeyFrame *>> &LoopConnections,
+        const bool                                       &bFixScale);
+    void static OptimizeEssentialGraph(
+        KeyFrame                *pCurKF,
+        std::vector<KeyFrame *> &vpFixedKFs,
+        std::vector<KeyFrame *> &vpFixedCorrectedKFs,
+        std::vector<KeyFrame *> &vpNonFixedKFs,
+        std::vector<MapPoint *> &vpNonCorrectedMPs);
 
     // For inertial loopclosing
     void static OptimizeEssentialGraph4DoF(
-        Map                                    *pMap,
-        KeyFrame                               *pLoopKF,
-        KeyFrame                               *pCurKF,
-        const LoopClosing::KeyFrameAndPose     &NonCorrectedSim3,
-        const LoopClosing::KeyFrameAndPose     &CorrectedSim3,
-        const map<KeyFrame *, set<KeyFrame *>> &LoopConnections);
+        Map                                              *pMap,
+        KeyFrame                                         *pLoopKF,
+        KeyFrame                                         *pCurKF,
+        const LoopClosing::KeyFrameAndPose               &NonCorrectedSim3,
+        const LoopClosing::KeyFrameAndPose               &CorrectedSim3,
+        const std::map<KeyFrame *, std::set<KeyFrame *>> &LoopConnections);
 
 
     // if bFixScale is true, optimize SE3 (stereo,rgbd), Sim3 otherwise (mono)
@@ -138,10 +139,10 @@ public:
                                 LoopClosing::KeyFrameAndPose &corrPoses);
 
     // Local BA in welding area when two maps are merged
-    void static LocalBundleAdjustment(KeyFrame          *pMainKF,
-                                      vector<KeyFrame *> vpAdjustKF,
-                                      vector<KeyFrame *> vpFixedKF,
-                                      bool              *pbStopFlag);
+    void static LocalBundleAdjustment(KeyFrame               *pMainKF,
+                                      std::vector<KeyFrame *> vpAdjustKF,
+                                      std::vector<KeyFrame *> vpFixedKF,
+                                      bool                   *pbStopFlag);
 
     // Marginalize block element (start:end,start:end). Perform Schur
     // complement. Marginalized elements are filled with zeros.

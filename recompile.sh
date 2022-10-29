@@ -1,1 +1,1 @@
-cmake --build build --parallel 8
+cmake --build build --parallel 6

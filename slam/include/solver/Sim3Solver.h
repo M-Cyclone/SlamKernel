@@ -34,12 +34,11 @@ class Sim3Solver
 {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    Sim3Solver(
-        KeyFrame                      *pKF1,
-        KeyFrame                      *pKF2,
-        const std::vector<MapPoint *> &vpMatched12,
-        const bool                     bFixScale     = true,
-        const vector<KeyFrame *> vpKeyFrameMatchedMP = vector<KeyFrame *>());
+    Sim3Solver(KeyFrame                      *pKF1,
+               KeyFrame                      *pKF2,
+               const std::vector<MapPoint *> &vpMatched12,
+               const bool                     bFixScale           = true,
+               const std::vector<KeyFrame *>  vpKeyFrameMatchedMP = {});
 
     void SetRansacParameters(double probability   = 0.99,
                              int    minInliers    = 6,
@@ -51,11 +50,11 @@ public:
                             bool              &bNoMore,
                             std::vector<bool> &vbInliers,
                             int               &nInliers);
-    Eigen::Matrix4f iterate(int           nIterations,
-                            bool         &bNoMore,
-                            vector<bool> &vbInliers,
-                            int          &nInliers,
-                            bool         &bConverge);
+    Eigen::Matrix4f iterate(int                nIterations,
+                            bool              &bNoMore,
+                            std::vector<bool> &vbInliers,
+                            int               &nInliers,
+                            bool              &bConverge);
 
     Eigen::Matrix4f GetEstimatedTransformation();
     Eigen::Matrix3f GetEstimatedRotation();

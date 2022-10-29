@@ -41,11 +41,11 @@ class LocalMapping
 {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    LocalMapping(System*       pSys,
-                 Atlas*        pAtlas,
-                 const float   bMonocular,
-                 bool          bInertial,
-                 const string& _strSeqName = std::string());
+    LocalMapping(System*            pSys,
+                 Atlas*             pAtlas,
+                 const float        bMonocular,
+                 bool               bInertial,
+                 const std::string& _strSeqName = std::string());
 
     void SetLoopCloser(LoopClosing* pLoopCloser);
 
@@ -76,7 +76,7 @@ public:
 
     int KeyframesInQueue()
     {
-        unique_lock<std::mutex> lock(mMutexNewKFs);
+        std::unique_lock<std::mutex> lock(mMutexNewKFs);
         return mlNewKeyFrames.size();
     }
 
@@ -101,9 +101,9 @@ public:
     int          mnMatchesInliers;
 
     // For debugging (erase in normal mode)
-    int    mInitFr;
-    int    mIdxIteration;
-    string strSequence;
+    int         mInitFr;
+    int         mIdxIteration;
+    std::string strSequence;
 
     bool mbNotBA1;
     bool mbNotBA2;
@@ -197,7 +197,7 @@ protected:
     int countRefinement;
 
     // DEBUG
-    ofstream f_lm;
+    std::ofstream f_lm;
 };
 
 }  // namespace ORB_SLAM3
