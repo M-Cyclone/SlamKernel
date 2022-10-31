@@ -22,6 +22,12 @@
 
 #ifndef TRACKING_H
 #define TRACKING_H
+#include <mutex>
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/features2d/features2d.hpp>
+#include <unordered_set>
+
 #include "camera_models/GeometricCamera.h"
 #include "feature/ORBVocabulary.h"
 #include "feature/ORBextractor.h"
@@ -30,11 +36,6 @@
 #include "map/Atlas.h"
 #include "utils/ImuTypes.h"
 #include "utils/Settings.h"
-
-#include <mutex>
-#include <opencv2/core/core.hpp>
-#include <opencv2/features2d/features2d.hpp>
-#include <unordered_set>
 
 namespace ORB_SLAM3
 {

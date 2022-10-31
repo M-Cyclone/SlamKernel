@@ -21,6 +21,8 @@
 
 
 #include "threads/LoopClosing.h"
+#include <mutex>
+#include <thread>
 
 #include "core/System.h"
 #include "feature/ORBmatcher.h"
@@ -30,9 +32,6 @@
 #include "threads/LocalMapping.h"
 #include "threads/Tracking.h"
 #include "utils/Converter.h"
-
-#include <mutex>
-#include <thread>
 
 namespace ORB_SLAM3
 {

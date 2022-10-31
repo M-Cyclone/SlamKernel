@@ -21,6 +21,9 @@
 
 
 #include "threads/Tracking.h"
+#include <chrono>
+#include <iostream>
+#include <mutex>
 
 #include "camera_models/KannalaBrandt8.h"
 #include "camera_models/Pinhole.h"
@@ -33,10 +36,6 @@
 #include "threads/LoopClosing.h"
 #include "utils/Converter.h"
 #include "utils/GeometricTools.h"
-
-#include <chrono>
-#include <iostream>
-#include <mutex>
 
 using namespace std;
 

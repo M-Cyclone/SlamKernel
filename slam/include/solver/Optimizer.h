@@ -22,13 +22,8 @@
 
 #ifndef OPTIMIZER_H
 #define OPTIMIZER_H
-#include "frame/Frame.h"
-#include "frame/KeyFrame.h"
-#include "map/Map.h"
-#include "map/MapPoint.h"
-#include "threads/LoopClosing.h"
-
 #include <cmath>
+
 #include <g2o/core/block_solver.h>
 #include <g2o/core/optimization_algorithm_gauss_newton.h>
 #include <g2o/core/optimization_algorithm_levenberg.h>
@@ -38,6 +33,12 @@
 #include <g2o/solvers/linear_solver_eigen.h>
 #include <g2o/types/types_seven_dof_expmap.h>
 #include <g2o/types/types_six_dof_expmap.h>
+
+#include "frame/Frame.h"
+#include "frame/KeyFrame.h"
+#include "map/Map.h"
+#include "map/MapPoint.h"
+#include "threads/LoopClosing.h"
 
 namespace ORB_SLAM3
 {

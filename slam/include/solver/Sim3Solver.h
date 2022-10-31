@@ -22,10 +22,11 @@
 
 #ifndef SIM3SOLVER_H
 #define SIM3SOLVER_H
-#include "frame/KeyFrame.h"
+#include <vector>
 
 #include <opencv2/opencv.hpp>
-#include <vector>
+
+#include "frame/KeyFrame.h"
 
 namespace ORB_SLAM3
 {

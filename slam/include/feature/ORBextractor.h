@@ -22,8 +22,9 @@
 #ifndef ORBEXTRACTOR_H
 #define ORBEXTRACTOR_H
 #include <list>
-#include <opencv2/opencv.hpp>
 #include <vector>
+
+#include <opencv2/opencv.hpp>
 
 namespace ORB_SLAM3
 {

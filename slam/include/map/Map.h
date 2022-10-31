@@ -22,11 +22,11 @@
 
 #ifndef MAP_H
 #define MAP_H
-#include "frame/KeyFrame.h"
-#include "map/MapPoint.h"
-
 #include <mutex>
 #include <set>
+
+#include "frame/KeyFrame.h"
+#include "map/MapPoint.h"
 
 namespace ORB_SLAM3
 {

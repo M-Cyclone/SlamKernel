@@ -22,14 +22,15 @@
 
 #ifndef IMUTYPES_H
 #define IMUTYPES_H
+#include <mutex>
+#include <utility>
+#include <vector>
+
 #include <Eigen/Core>
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
-#include <mutex>
 #include <opencv2/core/core.hpp>
 #include <sophus/se3.hpp>
-#include <utility>
-#include <vector>
 
 namespace ORB_SLAM3
 {

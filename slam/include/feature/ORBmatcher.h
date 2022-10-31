@@ -22,14 +22,15 @@
 
 #ifndef ORBMATCHER_H
 #define ORBMATCHER_H
-#include "frame/Frame.h"
-#include "frame/KeyFrame.h"
-#include "map/MapPoint.h"
+#include <vector>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <sophus/sim3.hpp>
-#include <vector>
+
+#include "frame/Frame.h"
+#include "frame/KeyFrame.h"
+#include "map/MapPoint.h"
 
 namespace ORB_SLAM3
 {

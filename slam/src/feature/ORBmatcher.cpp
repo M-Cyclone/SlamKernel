@@ -21,9 +21,10 @@
 
 
 #include "feature/ORBmatcher.h"
+#include <climits>
 
 #include <DBoW2/FeatureVector.h>
-#include <climits>
+
 #include <opencv2/core/core.hpp>
 
 using namespace std;

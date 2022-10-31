@@ -22,6 +22,14 @@
 
 #ifndef SYSTEM_H
 #define SYSTEM_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <thread>
+#include <unistd.h>
+
+#include <opencv2/core/core.hpp>
+
 #include "feature/ORBVocabulary.h"
 #include "frame/KeyFrameDatabase.h"
 #include "map/Atlas.h"
@@ -30,13 +38,6 @@
 #include "threads/Tracking.h"
 #include "utils/ImuTypes.h"
 #include "utils/Settings.h"
-
-#include <opencv2/core/core.hpp>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <thread>
-#include <unistd.h>
 
 namespace ORB_SLAM3
 {

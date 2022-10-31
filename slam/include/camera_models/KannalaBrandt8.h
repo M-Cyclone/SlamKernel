@@ -21,12 +21,10 @@
 
 #ifndef CAMERAMODELS_KANNALABRANDT8_H
 #define CAMERAMODELS_KANNALABRANDT8_H
-
+#include <cassert>
 
 #include "GeometricCamera.h"
 #include "solver/TwoViewReconstruction.h"
-
-#include <assert.h>
 
 namespace ORB_SLAM3
 {

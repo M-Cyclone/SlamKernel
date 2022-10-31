@@ -21,11 +21,11 @@
 
 #ifndef ORB_SLAM3_SETTINGS_H
 #define ORB_SLAM3_SETTINGS_H
-#include "camera_models/GeometricCamera.h"
-
 #include <iostream>
 #include <optional>
 #include <string>
+
+#include "camera_models/GeometricCamera.h"
 
 namespace ORB_SLAM3
 {

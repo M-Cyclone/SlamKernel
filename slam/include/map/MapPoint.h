@@ -22,12 +22,13 @@
 
 #ifndef MAPPOINT_H
 #define MAPPOINT_H
+#include <mutex>
+
+#include <opencv2/core/core.hpp>
+
 #include "frame/Frame.h"
 #include "frame/KeyFrame.h"
 #include "utils/Converter.h"
-
-#include <mutex>
-#include <opencv2/core/core.hpp>
 
 namespace ORB_SLAM3
 {

@@ -20,11 +20,10 @@
  */
 
 #include "utils/ImuTypes.h"
+#include <iostream>
 
 #include "utils/Converter.h"
 #include "utils/GeometricTools.h"
-
-#include <iostream>
 
 namespace ORB_SLAM3
 {

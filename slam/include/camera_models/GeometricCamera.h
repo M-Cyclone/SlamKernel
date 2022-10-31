@@ -21,15 +21,16 @@
 
 #ifndef CAMERAMODELS_GEOMETRICCAMERA_H
 #define CAMERAMODELS_GEOMETRICCAMERA_H
-#include "utils/Converter.h"
-#include "utils/GeometricTools.h"
+#include <vector>
 
 #include <Eigen/Geometry>
 #include <opencv2/core/core.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <sophus/se3.hpp>
-#include <vector>
+
+#include "utils/Converter.h"
+#include "utils/GeometricTools.h"
 
 namespace ORB_SLAM3
 {

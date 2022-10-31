@@ -22,10 +22,10 @@
 #ifndef CAMERAMODELS_PINHOLE_H
 #define CAMERAMODELS_PINHOLE_H
 
+#include <cassert>
+
 #include "GeometricCamera.h"
 #include "solver/TwoViewReconstruction.h"
-
-#include <assert.h>
 
 namespace ORB_SLAM3
 {

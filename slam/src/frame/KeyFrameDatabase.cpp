@@ -21,11 +21,11 @@
 
 
 #include "frame/KeyFrameDatabase.h"
-
-#include "frame/KeyFrame.h"
+#include <mutex>
 
 #include <DBoW2/BowVector.h>
-#include <mutex>
+
+#include "frame/KeyFrame.h"
 
 using namespace std;
 

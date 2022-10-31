@@ -20,14 +20,14 @@
  */
 
 #include "utils/Settings.h"
+#include <iostream>
+
+#include <opencv2/core/eigen.hpp>
+#include <opencv2/core/persistence.hpp>
 
 #include "camera_models/KannalaBrandt8.h"
 #include "camera_models/Pinhole.h"
 #include "core/System.h"
-
-#include <iostream>
-#include <opencv2/core/eigen.hpp>
-#include <opencv2/core/persistence.hpp>
 
 using namespace std;
 

@@ -22,15 +22,15 @@
 
 #ifndef KEYFRAMEDATABASE_H
 #define KEYFRAMEDATABASE_H
-#include "feature/ORBVocabulary.h"
-#include "frame/Frame.h"
-#include "frame/KeyFrame.h"
-#include "map/Map.h"
-
 #include <list>
 #include <mutex>
 #include <set>
 #include <vector>
+
+#include "feature/ORBVocabulary.h"
+#include "frame/Frame.h"
+#include "frame/KeyFrame.h"
+#include "map/Map.h"
 
 namespace ORB_SLAM3
 {

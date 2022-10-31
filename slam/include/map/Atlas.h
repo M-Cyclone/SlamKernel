@@ -21,15 +21,15 @@
 
 #ifndef ATLAS_H
 #define ATLAS_H
+#include <mutex>
+#include <set>
+
 #include "camera_models/GeometricCamera.h"
 #include "camera_models/KannalaBrandt8.h"
 #include "camera_models/Pinhole.h"
 #include "frame/KeyFrame.h"
 #include "map/Map.h"
 #include "map/MapPoint.h"
-
-#include <mutex>
-#include <set>
 
 namespace ORB_SLAM3
 {

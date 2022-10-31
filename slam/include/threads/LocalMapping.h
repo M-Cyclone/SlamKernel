@@ -22,12 +22,12 @@
 
 #ifndef LOCALMAPPING_H
 #define LOCALMAPPING_H
+#include <mutex>
+
 #include "frame/KeyFrame.h"
 #include "frame/KeyFrameDatabase.h"
 #include "map/Atlas.h"
 #include "utils/Settings.h"
-
-#include <mutex>
 
 namespace ORB_SLAM3
 {

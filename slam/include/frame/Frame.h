@@ -22,21 +22,23 @@
 
 #ifndef FRAME_H
 #define FRAME_H
+#include <array>
+#include <memory>
+#include <mutex>
+#include <vector>
+
+#include <DBoW2/BowVector.h>
+#include <DBoW2/FeatureVector.h>
+
+#include <Eigen/Core>
+#include <opencv2/opencv.hpp>
+#include <sophus/geometry.hpp>
+#include <sophus/se3.hpp>
+
 #include "feature/ORBVocabulary.h"
 #include "utils/Converter.h"
 #include "utils/ImuTypes.h"
 #include "utils/Settings.h"
-
-#include <DBoW2/BowVector.h>
-#include <DBoW2/FeatureVector.h>
-#include <Eigen/Core>
-#include <array>
-#include <memory>
-#include <mutex>
-#include <opencv2/opencv.hpp>
-#include <sophus/geometry.hpp>
-#include <sophus/se3.hpp>
-#include <vector>
 
 
 namespace ORB_SLAM3

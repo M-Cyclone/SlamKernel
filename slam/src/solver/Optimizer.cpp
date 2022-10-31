@@ -21,15 +21,9 @@
 
 
 #include "solver/Optimizer.h"
-
-#include "core/System.h"
-#include "solver/G2oTypes.h"
-#include "solver/OptimizableTypes.h"
-#include "utils/Converter.h"
-
-#include <Eigen/Dense>
-#include <Eigen/StdVector>
 #include <complex>
+#include <mutex>
+
 #include <g2o/core/block_solver.h>
 #include <g2o/core/optimization_algorithm_gauss_newton.h>
 #include <g2o/core/optimization_algorithm_levenberg.h>
@@ -38,8 +32,15 @@
 #include <g2o/solvers/linear_solver_dense.h>
 #include <g2o/solvers/linear_solver_eigen.h>
 #include <g2o/types/types_six_dof_expmap.h>
-#include <mutex>
+
+#include <Eigen/Dense>
+#include <Eigen/StdVector>
 #include <unsupported/Eigen/MatrixFunctions>
+
+#include "core/System.h"
+#include "solver/G2oTypes.h"
+#include "solver/OptimizableTypes.h"
+#include "utils/Converter.h"
 
 namespace ORB_SLAM3
 {

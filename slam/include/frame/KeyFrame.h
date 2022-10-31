@@ -22,15 +22,16 @@
 
 #ifndef KEYFRAME_H
 #define KEYFRAME_H
+#include <mutex>
+
+#include <DBoW2/BowVector.h>
+#include <DBoW2/FeatureVector.h>
+
 #include "camera_models/GeometricCamera.h"
 #include "feature/ORBVocabulary.h"
 #include "feature/ORBextractor.h"
 #include "frame/Frame.h"
 #include "utils/ImuTypes.h"
-
-#include <DBoW2/BowVector.h>
-#include <DBoW2/FeatureVector.h>
-#include <mutex>
 
 namespace ORB_SLAM3
 {

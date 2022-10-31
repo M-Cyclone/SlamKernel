@@ -22,14 +22,15 @@
 
 #ifndef LOOPCLOSING_H
 #define LOOPCLOSING_H
+#include <mutex>
+#include <thread>
+
+#include <g2o/types/types_seven_dof_expmap.h>
+
 #include "feature/ORBVocabulary.h"
 #include "frame/KeyFrame.h"
 #include "frame/KeyFrameDatabase.h"
 #include "map/Atlas.h"
-
-#include <g2o/types/types_seven_dof_expmap.h>
-#include <mutex>
-#include <thread>
 
 namespace ORB_SLAM3
 {

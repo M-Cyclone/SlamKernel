@@ -20,12 +20,12 @@
  */
 
 #include "solver/TwoViewReconstruction.h"
+#include <thread>
+
+#include <DUtils/Random.h>
 
 #include "utils/Converter.h"
 #include "utils/GeometricTools.h"
-
-#include <DUtils/Random.h>
-#include <thread>
 
 using namespace std;
 

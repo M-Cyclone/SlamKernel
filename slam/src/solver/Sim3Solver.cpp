@@ -21,14 +21,15 @@
 
 
 #include "solver/Sim3Solver.h"
+#include <cmath>
+#include <vector>
+
+#include <DUtils/Random.h>
+
+#include <opencv2/core/core.hpp>
 
 #include "feature/ORBmatcher.h"
 #include "frame/KeyFrame.h"
-
-#include <DUtils/Random.h>
-#include <cmath>
-#include <opencv2/core/core.hpp>
-#include <vector>
 
 namespace ORB_SLAM3
 {

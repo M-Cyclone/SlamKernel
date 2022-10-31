@@ -51,11 +51,11 @@
 
 #ifndef ORB_SLAM3_MLPNPSOLVER_H
 #define ORB_SLAM3_MLPNPSOLVER_H
-#include "frame/Frame.h"
-#include "map/MapPoint.h"
-
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
+
+#include "frame/Frame.h"
+#include "map/MapPoint.h"
 
 namespace ORB_SLAM3
 {

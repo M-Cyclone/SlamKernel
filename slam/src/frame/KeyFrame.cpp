@@ -20,13 +20,12 @@
  */
 
 #include "frame/KeyFrame.h"
+#include <mutex>
 
 #include "frame/KeyFrameDatabase.h"
 #include "map/MapPoint.h"
 #include "utils/Converter.h"
 #include "utils/ImuTypes.h"
-
-#include <mutex>
 
 namespace ORB_SLAM3
 {

@@ -20,6 +20,7 @@
  */
 
 #include "frame/Frame.h"
+#include <thread>
 
 #include "camera_models/GeometricCamera.h"
 #include "camera_models/KannalaBrandt8.h"
@@ -30,8 +31,6 @@
 #include "map/MapPoint.h"
 #include "solver/G2oTypes.h"
 #include "utils/Converter.h"
-
-#include <thread>
 
 namespace ORB_SLAM3
 {
