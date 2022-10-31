@@ -1,5 +1,6 @@
 # 语言: None, Cpp, Java, JavaScript, ObjC, Proto, TableGen, TextProto #
 Language:	Cpp
+
 # 基础格式 #
 BasedOnStyle: Google
 # 访问说明符(public、private等)的偏移 #
@@ -243,7 +244,7 @@ SpacesInParentheses:	false
 SpacesInSquareBrackets:	false
 
 # 标准: Cpp03, Cpp11, Auto
-Standard:	Cpp11
+Standard:	c++17
 
 # tab宽度
 TabWidth:	4
