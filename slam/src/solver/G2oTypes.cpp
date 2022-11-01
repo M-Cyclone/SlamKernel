@@ -279,8 +279,7 @@ InvDepthPoint::InvDepthPoint(double    _rho,
     , cx(pHostKF->cx)
     , cy(pHostKF->cy)
     , bf(pHostKF->mbf)
-{
-}
+{}
 
 void InvDepthPoint::Update(const double* pu)
 {
@@ -300,8 +299,7 @@ bool VertexPose::read(std::istream& is)
     {
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 3; j++)
-                is >> Rcw[idx](i, j);
+            for (int j = 0; j < 3; j++) is >> Rcw[idx](i, j);
         }
         for (int i = 0; i < 3; i++)
         {
@@ -310,8 +308,7 @@ bool VertexPose::read(std::istream& is)
 
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 3; j++)
-                is >> Rbc[idx](i, j);
+            for (int j = 0; j < 3; j++) is >> Rbc[idx](i, j);
         }
         for (int i = 0; i < 3; i++)
         {
@@ -348,8 +345,7 @@ bool VertexPose::write(std::ostream& os) const
     {
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 3; j++)
-                os << Rcw[idx](i, j) << " ";
+            for (int j = 0; j < 3; j++) os << Rcw[idx](i, j) << " ";
         }
         for (int i = 0; i < 3; i++)
         {
@@ -358,8 +354,7 @@ bool VertexPose::write(std::ostream& os) const
 
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 3; j++)
-                os << Rbc[idx](i, j) << " ";
+            for (int j = 0; j < 3; j++) os << Rbc[idx](i, j) << " ";
         }
         for (int i = 0; i < 3; i++)
         {
@@ -545,8 +540,7 @@ EdgeInertial::EdgeInertial(IMU::Preintegrated* pInt)
     Eigen::SelfAdjointEigenSolver<Eigen::Matrix<double, 9, 9>> es(Info);
     Eigen::Matrix<double, 9, 1> eigs = es.eigenvalues();
     for (int i = 0; i < 9; i++)
-        if (eigs[i] < 1e-12)
-            eigs[i] = 0;
+        if (eigs[i] < 1e-12) eigs[i] = 0;
     Info =
         es.eigenvectors() * eigs.asDiagonal() * es.eigenvectors().transpose();
     setInformation(Info);
@@ -579,13 +573,13 @@ void EdgeInertial::computeError()
     const Eigen::Vector3d er = LogSO3(
         dR.transpose() * VP1->estimate().Rwb.transpose() * VP2->estimate().Rwb);
     const Eigen::Vector3d ev =
-        VP1->estimate().Rwb.transpose()
-            * (VV2->estimate() - VV1->estimate() - g * dt)
-        - dV;
-    const Eigen::Vector3d ep = VP1->estimate().Rwb.transpose()
-                                   * (VP2->estimate().twb - VP1->estimate().twb
-                                      - VV1->estimate() * dt - g * dt * dt / 2)
-                               - dP;
+        VP1->estimate().Rwb.transpose() *
+            (VV2->estimate() - VV1->estimate() - g * dt) -
+        dV;
+    const Eigen::Vector3d ep = VP1->estimate().Rwb.transpose() *
+                                   (VP2->estimate().twb - VP1->estimate().twb -
+                                    VV1->estimate() * dt - g * dt * dt / 2) -
+                               dP;
 
     _error << er, ev, ep;
 }
@@ -628,9 +622,8 @@ void EdgeInertial::linearizeOplus()
     _jacobianOplus[0].block<3, 3>(3, 0) = Sophus::SO3d::hat(
         Rbw1 * (VV2->estimate() - VV1->estimate() - g * dt));  // OK
     _jacobianOplus[0].block<3, 3>(6, 0) = Sophus::SO3d::hat(
-        Rbw1
-        * (VP2->estimate().twb - VP1->estimate().twb - VV1->estimate() * dt
-           - 0.5 * g * dt * dt));  // OK
+        Rbw1 * (VP2->estimate().twb - VP1->estimate().twb -
+                VV1->estimate() * dt - 0.5 * g * dt * dt));  // OK
     // translation
     _jacobianOplus[0].block<3, 3>(6, 3) = -Eigen::Matrix3d::Identity();  // OK
 
@@ -681,8 +674,7 @@ EdgeInertialGS::EdgeInertialGS(IMU::Preintegrated* pInt)
     Eigen::SelfAdjointEigenSolver<Eigen::Matrix<double, 9, 9>> es(Info);
     Eigen::Matrix<double, 9, 1> eigs = es.eigenvalues();
     for (int i = 0; i < 9; i++)
-        if (eigs[i] < 1e-12)
-            eigs[i] = 0;
+        if (eigs[i] < 1e-12) eigs[i] = 0;
     Info =
         es.eigenvectors() * eigs.asDiagonal() * es.eigenvectors().transpose();
     setInformation(Info);
@@ -718,16 +710,15 @@ void EdgeInertialGS::computeError()
     const Eigen::Vector3d er = LogSO3(
         dR.transpose() * VP1->estimate().Rwb.transpose() * VP2->estimate().Rwb);
     const Eigen::Vector3d ev =
-        VP1->estimate().Rwb.transpose()
-            * (s * (VV2->estimate() - VV1->estimate()) - g * dt)
-        - dV;
+        VP1->estimate().Rwb.transpose() *
+            (s * (VV2->estimate() - VV1->estimate()) - g * dt) -
+        dV;
     const Eigen::Vector3d ep =
-        VP1->estimate().Rwb.transpose()
-            * (s
-                   * (VP2->estimate().twb - VP1->estimate().twb
-                      - VV1->estimate() * dt)
-               - g * dt * dt / 2)
-        - dP;
+        VP1->estimate().Rwb.transpose() *
+            (s * (VP2->estimate().twb - VP1->estimate().twb -
+                  VV1->estimate() * dt) -
+             g * dt * dt / 2) -
+        dP;
 
     _error << er, ev, ep;
 }
@@ -775,12 +766,10 @@ void EdgeInertialGS::linearizeOplus()
     _jacobianOplus[0].block<3, 3>(0, 0) = -invJr * Rwb2.transpose() * Rwb1;
     _jacobianOplus[0].block<3, 3>(3, 0) = Sophus::SO3d::hat(
         Rbw1 * (s * (VV2->estimate() - VV1->estimate()) - g * dt));
-    _jacobianOplus[0].block<3, 3>(6, 0) =
-        Sophus::SO3d::hat(Rbw1
-                          * (s
-                                 * (VP2->estimate().twb - VP1->estimate().twb
-                                    - VV1->estimate() * dt)
-                             - 0.5 * g * dt * dt));
+    _jacobianOplus[0].block<3, 3>(6, 0) = Sophus::SO3d::hat(
+        Rbw1 * (s * (VP2->estimate().twb - VP1->estimate().twb -
+                     VV1->estimate() * dt) -
+                0.5 * g * dt * dt));
     // translation
     _jacobianOplus[0].block<3, 3>(6, 3) =
         Eigen::DiagonalMatrix<double, 3>(-s, -s, -s);
@@ -823,8 +812,8 @@ void EdgeInertialGS::linearizeOplus()
     _jacobianOplus[7].block<3, 1>(3, 0) =
         Rbw1 * (VV2->estimate() - VV1->estimate());
     _jacobianOplus[7].block<3, 1>(6, 0) =
-        Rbw1
-        * (VP2->estimate().twb - VP1->estimate().twb - VV1->estimate() * dt);
+        Rbw1 *
+        (VP2->estimate().twb - VP1->estimate().twb - VV1->estimate() * dt);
 }
 
 EdgePriorPoseImu::EdgePriorPoseImu(ConstraintPoseImu* c)
@@ -900,8 +889,8 @@ Eigen::Matrix3d ExpSO3(const double x, const double y, const double z)
     }
     else
     {
-        Eigen::Matrix3d res = Eigen::Matrix3d::Identity() + W * sin(d) / d
-                              + W * W * (1.0 - cos(d)) / d2;
+        Eigen::Matrix3d res = Eigen::Matrix3d::Identity() + W * sin(d) / d +
+                              W * W * (1.0 - cos(d)) / d2;
         return NormalizeRotation(res);
     }
 }
@@ -913,8 +902,7 @@ Eigen::Vector3d LogSO3(const Eigen::Matrix3d& R)
     w << (R(2, 1) - R(1, 2)) / 2, (R(0, 2) - R(2, 0)) / 2,
         (R(1, 0) - R(0, 1)) / 2;
     const double costheta = (tr - 1.0) * 0.5f;
-    if (costheta > 1 || costheta < -1)
-        return w;
+    if (costheta > 1 || costheta < -1) return w;
     const double theta = acos(costheta);
     const double s     = sin(theta);
     if (fabs(s) < 1e-5)
@@ -928,8 +916,9 @@ Eigen::Matrix3d InverseRightJacobianSO3(const Eigen::Vector3d& v)
     return InverseRightJacobianSO3(v[0], v[1], v[2]);
 }
 
-Eigen::Matrix3d
-InverseRightJacobianSO3(const double x, const double y, const double z)
+Eigen::Matrix3d InverseRightJacobianSO3(const double x,
+                                        const double y,
+                                        const double z)
 {
     const double d2 = x * x + y * y + z * z;
     const double d  = sqrt(d2);
@@ -939,8 +928,8 @@ InverseRightJacobianSO3(const double x, const double y, const double z)
     if (d < 1e-5)
         return Eigen::Matrix3d::Identity();
     else
-        return Eigen::Matrix3d::Identity() + W / 2
-               + W * W * (1.0 / d2 - (1.0 + cos(d)) / (2.0 * d * sin(d)));
+        return Eigen::Matrix3d::Identity() + W / 2 +
+               W * W * (1.0 / d2 - (1.0 + cos(d)) / (2.0 * d * sin(d)));
 }
 
 Eigen::Matrix3d RightJacobianSO3(const Eigen::Vector3d& v)
@@ -961,8 +950,8 @@ Eigen::Matrix3d RightJacobianSO3(const double x, const double y, const double z)
     }
     else
     {
-        return Eigen::Matrix3d::Identity() - W * (1.0 - cos(d)) / d2
-               + W * W * (d - sin(d)) / (d2 * d);
+        return Eigen::Matrix3d::Identity() - W * (1.0 - cos(d)) / d2 +
+               W * W * (d - sin(d)) / (d2 * d);
     }
 }
 

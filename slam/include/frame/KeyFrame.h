@@ -131,10 +131,7 @@ public:
     // Compute Scene Depth (q=2 median). Used in monocular.
     float ComputeSceneMedianDepth(const int q);
 
-    static bool weightComp(int a, int b)
-    {
-        return a > b;
-    }
+    static bool weightComp(int a, int b) { return a > b; }
 
     static bool lId(KeyFrame* pKF1, KeyFrame* pKF2)
     {
@@ -151,10 +148,14 @@ public:
 
     IMU::Bias GetImuBias();
 
-    bool
-    ProjectPointDistort(MapPoint* pMP, cv::Point2f& kp, float& u, float& v);
-    bool
-    ProjectPointUnDistort(MapPoint* pMP, cv::Point2f& kp, float& u, float& v);
+    bool ProjectPointDistort(MapPoint*    pMP,
+                             cv::Point2f& kp,
+                             float&       u,
+                             float&       v);
+    bool ProjectPointUnDistort(MapPoint*    pMP,
+                               cv::Point2f& kp,
+                               float&       u,
+                               float&       v);
 
     void PreSave(std::set<KeyFrame*>&        spKF,
                  std::set<MapPoint*>&        spMP,

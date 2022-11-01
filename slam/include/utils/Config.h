@@ -29,25 +29,21 @@ namespace ORB_SLAM3
 {
 
 class ViewerConfig
-{
-};
+{};
 
 class CameraConfig
-{
-};
+{};
 
 class ORBExtractorConfig
-{
-};
+{};
 
 class IMUConfig
-{
-};
+{};
 
 class ConfigParser
 {
 public:
-    bool ParseConfigFile(std::string &strConfigFile);
+    bool ParseConfigFile(std::string& strConfigFile);
 
 private:
     ViewerConfig       mViewerConfig;

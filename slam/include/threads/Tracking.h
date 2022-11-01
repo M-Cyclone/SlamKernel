@@ -52,7 +52,6 @@ class Settings;
 
 class Tracking
 {
-
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -113,10 +112,7 @@ public:
                         const IMU::Bias& b,
                         KeyFrame*        pCurrentKeyFrame);
 
-    KeyFrame* GetLastKeyFrame()
-    {
-        return mpLastKeyFrame;
-    }
+    KeyFrame* GetLastKeyFrame() { return mpLastKeyFrame; }
 
     void CreateMapInAtlas();
     // std::mutex mMutexTracks;
@@ -346,7 +342,7 @@ protected:
     bool mbCreatedMap;
 
     // Motion Model
-    bool         mbVelocity{false};
+    bool         mbVelocity{ false };
     Sophus::SE3f mVelocity;
 
     // Color order (true RGB, false BGR, ignored if grayscale)

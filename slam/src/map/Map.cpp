@@ -76,8 +76,7 @@ Map::~Map()
     // TODO: erase all keyframes from memory
     mspKeyFrames.clear();
 
-    if (mThumbnail)
-        delete mThumbnail;
+    if (mThumbnail) delete mThumbnail;
     mThumbnail = static_cast<uint8_t*>(NULL);
 
     mvpReferenceMapPoints.clear();
@@ -396,8 +395,7 @@ void Map::PreSave(std::set<GeometricCamera*>& spCams)
     int nMPWithoutObs = 0;
     for (MapPoint* pMPi : mspMapPoints)
     {
-        if (!pMPi || pMPi->isBad())
-            continue;
+        if (!pMPi || pMPi->isBad()) continue;
 
         if (pMPi->GetObservations().size() == 0)
         {
@@ -427,8 +425,7 @@ void Map::PreSave(std::set<GeometricCamera*>& spCams)
     mvpBackupMapPoints.clear();
     for (MapPoint* pMPi : mspMapPoints)
     {
-        if (!pMPi || pMPi->isBad())
-            continue;
+        if (!pMPi || pMPi->isBad()) continue;
 
         mvpBackupMapPoints.push_back(pMPi);
         pMPi->PreSave(mspKeyFrames, mspMapPoints);
@@ -438,8 +435,7 @@ void Map::PreSave(std::set<GeometricCamera*>& spCams)
     mvpBackupKeyFrames.clear();
     for (KeyFrame* pKFi : mspKeyFrames)
     {
-        if (!pKFi || pKFi->isBad())
-            continue;
+        if (!pKFi || pKFi->isBad()) continue;
 
         mvpBackupKeyFrames.push_back(pKFi);
         pKFi->PreSave(mspKeyFrames, mspMapPoints, spCams);
@@ -474,8 +470,7 @@ void Map::PostLoad(
     std::map<long unsigned int, MapPoint*> mpMapPointId;
     for (MapPoint* pMPi : mspMapPoints)
     {
-        if (!pMPi || pMPi->isBad())
-            continue;
+        if (!pMPi || pMPi->isBad()) continue;
 
         pMPi->UpdateMap(this);
         mpMapPointId[pMPi->mnId] = pMPi;
@@ -484,8 +479,7 @@ void Map::PostLoad(
     std::map<long unsigned int, KeyFrame*> mpKeyFrameId;
     for (KeyFrame* pKFi : mspKeyFrames)
     {
-        if (!pKFi || pKFi->isBad())
-            continue;
+        if (!pKFi || pKFi->isBad()) continue;
 
         pKFi->UpdateMap(this);
         pKFi->SetORBVocabulary(pORBVoc);
@@ -496,16 +490,14 @@ void Map::PostLoad(
     // References reconstruction between different instances
     for (MapPoint* pMPi : mspMapPoints)
     {
-        if (!pMPi || pMPi->isBad())
-            continue;
+        if (!pMPi || pMPi->isBad()) continue;
 
         pMPi->PostLoad(mpKeyFrameId, mpMapPointId);
     }
 
     for (KeyFrame* pKFi : mspKeyFrames)
     {
-        if (!pKFi || pKFi->isBad())
-            continue;
+        if (!pKFi || pKFi->isBad()) continue;
 
         pKFi->PostLoad(mpKeyFrameId, mpMapPointId, mpCams);
         pKFDB->add(pKFi);

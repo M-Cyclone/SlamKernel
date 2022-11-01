@@ -40,7 +40,6 @@
 #include "utils/ImuTypes.h"
 #include "utils/Settings.h"
 
-
 namespace ORB_SLAM3
 {
 
@@ -62,71 +61,71 @@ public:
     // Frame(const Frame &frame);
 
     // Constructor for stereo cameras.
-    Frame(const cv::Mat    &imLeft,
-          const cv::Mat    &imRight,
-          const double     &timeStamp,
-          ORBextractor     *extractorLeft,
-          ORBextractor     *extractorRight,
-          ORBVocabulary    *voc,
-          cv::Mat          &K,
-          cv::Mat          &distCoef,
-          const float      &bf,
-          const float      &thDepth,
-          GeometricCamera  *pCamera,
-          Frame            *pPrevF   = static_cast<Frame *>(NULL),
-          const IMU::Calib &ImuCalib = IMU::Calib());
+    Frame(const cv::Mat&    imLeft,
+          const cv::Mat&    imRight,
+          const double&     timeStamp,
+          ORBextractor*     extractorLeft,
+          ORBextractor*     extractorRight,
+          ORBVocabulary*    voc,
+          cv::Mat&          K,
+          cv::Mat&          distCoef,
+          const float&      bf,
+          const float&      thDepth,
+          GeometricCamera*  pCamera,
+          Frame*            pPrevF   = nullptr,
+          const IMU::Calib& ImuCalib = {});
 
     // Constructor for RGB-D cameras.
-    Frame(const cv::Mat    &imGray,
-          const cv::Mat    &imDepth,
-          const double     &timeStamp,
-          ORBextractor     *extractor,
-          ORBVocabulary    *voc,
-          cv::Mat          &K,
-          cv::Mat          &distCoef,
-          const float      &bf,
-          const float      &thDepth,
-          GeometricCamera  *pCamera,
-          Frame            *pPrevF   = nullptr,
-          const IMU::Calib &ImuCalib = {});
+    Frame(const cv::Mat&    imGray,
+          const cv::Mat&    imDepth,
+          const double&     timeStamp,
+          ORBextractor*     extractor,
+          ORBVocabulary*    voc,
+          cv::Mat&          K,
+          cv::Mat&          distCoef,
+          const float&      bf,
+          const float&      thDepth,
+          GeometricCamera*  pCamera,
+          Frame*            pPrevF   = nullptr,
+          const IMU::Calib& ImuCalib = {});
 
     // Constructor for Monocular cameras.
-    Frame(const cv::Mat    &imGray,
-          const double     &timeStamp,
-          ORBextractor     *extractor,
-          ORBVocabulary    *voc,
-          GeometricCamera  *pCamera,
-          cv::Mat          &distCoef,
-          const float      &bf,
-          const float      &thDepth,
-          Frame            *pPrevF   = static_cast<Frame *>(NULL),
-          const IMU::Calib &ImuCalib = IMU::Calib());
+    Frame(const cv::Mat&    imGray,
+          const double&     timeStamp,
+          ORBextractor*     extractor,
+          ORBVocabulary*    voc,
+          GeometricCamera*  pCamera,
+          cv::Mat&          distCoef,
+          const float&      bf,
+          const float&      thDepth,
+          Frame*            pPrevF   = nullptr,
+          const IMU::Calib& ImuCalib = {});
 
     // Destructor
     ~Frame() = default;
 
 private:
-    Frame(const Frame &frame)       = delete;
-    Frame &operator=(const Frame &) = default;
+    Frame(const Frame& frame)      = delete;
+    Frame& operator=(const Frame&) = default;
 
 public:
-    void copyFrom(const Frame &rhs) noexcept;
+    void copyFrom(const Frame& rhs) noexcept;
 
     template <typename... Args>
-    void reset(Args &&...args)
+    void reset(Args&&... args)
     {
-        this->copyFrom(Frame(std::forward<Args &&>(args)...));
+        this->copyFrom(Frame(std::forward<Args&&>(args)...));
     }
 
 public:
     // Extract ORB on the image. 0 for left image and 1 for right image.
-    void ExtractORB(int flag, const cv::Mat &im, const int x0, const int x1);
+    void ExtractORB(int flag, const cv::Mat& im, const int x0, const int x1);
 
     // Compute Bag of Words representation.
     void ComputeBoW();
 
     // Set the camera pose. (Imu pose is not modified!)
-    void SetPose(const Sophus::SE3<float> &Tcw);
+    void SetPose(const Sophus::SE3<float>& Tcw);
 
     // Set IMU velocity
     void SetVelocity(Eigen::Vector3f Vw);
@@ -134,9 +133,9 @@ public:
     Eigen::Vector3f GetVelocity() const;
 
     // Set IMU pose and velocity (implicitly changes camera pose)
-    void SetImuPoseVelocity(const Eigen::Matrix3f &Rwb,
-                            const Eigen::Vector3f &twb,
-                            const Eigen::Vector3f &Vwb);
+    void SetImuPoseVelocity(const Eigen::Matrix3f& Rwb,
+                            const Eigen::Vector3f& twb,
+                            const Eigen::Vector3f& Vwb);
 
     Eigen::Matrix<float, 3, 1> GetImuPosition() const;
     Eigen::Matrix<float, 3, 3> GetImuRotation();
@@ -147,23 +146,25 @@ public:
     Eigen::Matrix3f GetRelativePoseTlr_rotation();
     Eigen::Vector3f GetRelativePoseTlr_translation();
 
-    void SetNewBias(const IMU::Bias &b);
+    void SetNewBias(const IMU::Bias& b);
 
     // Check if a MapPoint is in the frustum of the camera
     // and fill variables of the MapPoint to be used by the tracking
-    bool isInFrustum(MapPoint *pMP, float viewingCosLimit);
+    bool isInFrustum(MapPoint* pMP, float viewingCosLimit);
 
-    bool
-    ProjectPointDistort(MapPoint *pMP, cv::Point2f &kp, float &u, float &v);
+    bool ProjectPointDistort(MapPoint*    pMP,
+                             cv::Point2f& kp,
+                             float&       u,
+                             float&       v);
 
     Eigen::Vector3f inRefCoordinates(Eigen::Vector3f pCw);
 
     // Compute the cell of a keypoint (return false if outside the grid)
-    bool PosInGrid(const cv::KeyPoint &kp, int &posX, int &posY);
+    bool PosInGrid(const cv::KeyPoint& kp, int& posX, int& posY);
 
-    std::vector<size_t> GetFeaturesInArea(const float &x,
-                                          const float &y,
-                                          const float &r,
+    std::vector<size_t> GetFeaturesInArea(const float& x,
+                                          const float& y,
+                                          const float& r,
                                           const int    minLevel = -1,
                                           const int    maxLevel = -1,
                                           const bool   bRight   = false) const;
@@ -175,13 +176,13 @@ public:
 
     // Associate a "right" coordinate to a keypoint if there is valid depth
     // in the depthmap.
-    void ComputeStereoFromRGBD(const cv::Mat &imDepth);
+    void ComputeStereoFromRGBD(const cv::Mat& imDepth);
 
     // Backprojects a keypoint (if stereo/depth info available) into 3D
     // world coordinates.
-    bool UnprojectStereo(const int &i, Eigen::Vector3f &x3D);
+    bool UnprojectStereo(const int& i, Eigen::Vector3f& x3D);
 
-    ConstraintPoseImu *mpcpi = nullptr;
+    ConstraintPoseImu* mpcpi = nullptr;
 
     bool imuIsPreintegrated();
     void setIntegrated();
@@ -193,16 +194,10 @@ public:
     void UpdatePoseMatrices();
 
     // Returns the camera center.
-    inline Eigen::Vector3f GetCameraCenter()
-    {
-        return mOw;
-    }
+    inline Eigen::Vector3f GetCameraCenter() { return mOw; }
 
     // Returns inverse of rotation
-    inline Eigen::Matrix3f GetRotationInverse()
-    {
-        return mRwc;
-    }
+    inline Eigen::Matrix3f GetRotationInverse() { return mRwc; }
 
     inline Sophus::SE3<float> GetPose() const
     {
@@ -211,25 +206,13 @@ public:
         return mTcw;
     }
 
-    inline Eigen::Matrix3f GetRwc() const
-    {
-        return mRwc;
-    }
+    inline Eigen::Matrix3f GetRwc() const { return mRwc; }
 
-    inline Eigen::Vector3f GetOw() const
-    {
-        return mOw;
-    }
+    inline Eigen::Vector3f GetOw() const { return mOw; }
 
-    inline bool HasPose() const
-    {
-        return mbHasPose;
-    }
+    inline bool HasPose() const { return mbHasPose; }
 
-    inline bool HasVelocity() const
-    {
-        return mbHasVelocity;
-    }
+    inline bool HasVelocity() const { return mbHasVelocity; }
 
 
 private:
@@ -260,11 +243,11 @@ public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
     // Vocabulary used for relocalization.
-    ORBVocabulary *mpORBvocabulary;
+    ORBVocabulary* mpORBvocabulary;
 
     // Feature extractor. The right is used only in the stereo case.
-    ORBextractor *mpORBextractorLeft  = nullptr;
-    ORBextractor *mpORBextractorRight = nullptr;
+    ORBextractor* mpORBextractorLeft  = nullptr;
+    ORBextractor* mpORBextractorRight = nullptr;
 
     // Frame timestamp.
     double mTimeStamp;
@@ -301,7 +284,7 @@ public:
     std::vector<cv::KeyPoint> mvKeysUn;
 
     // Corresponding stereo coordinate and depth for each keypoint.
-    std::vector<MapPoint *> mvpMapPoints;
+    std::vector<MapPoint*> mvpMapPoints;
     // "Monocular" keypoints have a negative value.
     std::vector<float> mvuRight;
     std::vector<float> mvDepth;
@@ -336,19 +319,19 @@ public:
     IMU::Calib mImuCalib;
 
     // Imu preintegration from last keyframe
-    IMU::Preintegrated *mpImuPreintegrated = nullptr;
-    KeyFrame           *mpLastKeyFrame;
+    IMU::Preintegrated* mpImuPreintegrated = nullptr;
+    KeyFrame*           mpLastKeyFrame;
 
     // Pointer to previous frame
-    Frame              *mpPrevFrame;
-    IMU::Preintegrated *mpImuPreintegratedFrame = nullptr;
+    Frame*              mpPrevFrame;
+    IMU::Preintegrated* mpImuPreintegratedFrame = nullptr;
 
     // Current and Next Frame id.
     static long unsigned int nNextId;
     long unsigned int        mnId;
 
     // Reference Keyframe.
-    KeyFrame *mpReferenceKF = nullptr;
+    KeyFrame* mpReferenceKF = nullptr;
 
     // Scale pyramid info.
     int                mnScaleLevels;
@@ -382,7 +365,7 @@ private:
 
     // Computes image bounds for the undistorted image (called in the
     // constructor).
-    void ComputeImageBounds(const cv::Mat &imLeft);
+    void ComputeImageBounds(const cv::Mat& imLeft);
 
     // Assign keypoints to the grid for speed up feature matching (called in
     // the constructor).
@@ -395,8 +378,8 @@ private:
     std::shared_ptr<std::mutex> mpMutexImu;
 
 public:
-    GeometricCamera *mpCamera = nullptr;
-    GeometricCamera *mpCamera2;
+    GeometricCamera* mpCamera = nullptr;
+    GeometricCamera* mpCamera2;
 
     // Number of KeyPoints extracted in the left and right images
     int Nleft, Nright;
@@ -420,30 +403,30 @@ public:
                FRAME_GRID_COLS>
         mGridRight;
 
-    Frame(const cv::Mat    &imLeft,
-          const cv::Mat    &imRight,
-          const double     &timeStamp,
-          ORBextractor     *extractorLeft,
-          ORBextractor     *extractorRight,
-          ORBVocabulary    *voc,
-          cv::Mat          &K,
-          cv::Mat          &distCoef,
-          const float      &bf,
-          const float      &thDepth,
-          GeometricCamera  *pCamera,
-          GeometricCamera  *pCamera2,
-          Sophus::SE3f     &Tlr,
-          Frame            *pPrevF   = static_cast<Frame *>(NULL),
-          const IMU::Calib &ImuCalib = IMU::Calib());
+    Frame(const cv::Mat&    imLeft,
+          const cv::Mat&    imRight,
+          const double&     timeStamp,
+          ORBextractor*     extractorLeft,
+          ORBextractor*     extractorRight,
+          ORBVocabulary*    voc,
+          cv::Mat&          K,
+          cv::Mat&          distCoef,
+          const float&      bf,
+          const float&      thDepth,
+          GeometricCamera*  pCamera,
+          GeometricCamera*  pCamera2,
+          Sophus::SE3f&     Tlr,
+          Frame*            pPrevF   = static_cast<Frame*>(NULL),
+          const IMU::Calib& ImuCalib = IMU::Calib());
 
     // Stereo fisheye
     void ComputeStereoFishEyeMatches();
 
-    bool isInFrustumChecks(MapPoint *pMP,
+    bool isInFrustumChecks(MapPoint* pMP,
                            float     viewingCosLimit,
                            bool      bRight = false);
 
-    Eigen::Vector3f UnprojectStereoFishEye(const int &i);
+    Eigen::Vector3f UnprojectStereoFishEye(const int& i);
 
     cv::Mat imgLeft, imgRight;
 

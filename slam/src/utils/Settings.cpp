@@ -191,10 +191,10 @@ Settings::Settings(const SettingDesc& desc)
         {
             cameraType_ = CameraType::PinHole;
 
-            vCalibration    = {desc.cameraInfo.fx,
-                               desc.cameraInfo.fy,
-                               desc.cameraInfo.cx,
-                               desc.cameraInfo.cy};
+            vCalibration    = { desc.cameraInfo.fx,
+                                desc.cameraInfo.fy,
+                                desc.cameraInfo.cx,
+                                desc.cameraInfo.cy };
             calibration1_   = new Pinhole(vCalibration);
             originalCalib1_ = new Pinhole(vCalibration);
 
@@ -212,18 +212,17 @@ Settings::Settings(const SettingDesc& desc)
                 }
             }
 
-            if ((sensor_ == System::MONOCULAR
-                 || sensor_ == System::IMU_MONOCULAR)
-                && (!vPinHoleDistorsion1_.empty()))
+            if ((sensor_ == System::MONOCULAR ||
+                 sensor_ == System::IMU_MONOCULAR) &&
+                (!vPinHoleDistorsion1_.empty()))
             {
                 bNeedToUndistort_ = true;
             }
         }
         else
         {
-            assert(
-                false
-                && "Android Slam does not support these camera type for now.");
+            assert(false &&
+                   "Android Slam does not support these camera type for now.");
         }
     }
 
@@ -256,11 +255,12 @@ Settings::Settings(const SettingDesc& desc)
                     calibration1_->getParameter(3) * scaleRowFactor, 3);
 
 
-                if ((sensor_ == System::STEREO || sensor_ == System::IMU_STEREO)
-                    && cameraType_ != Rectified)
+                if ((sensor_ == System::STEREO ||
+                     sensor_ == System::IMU_STEREO) &&
+                    cameraType_ != Rectified)
                 {
-                    assert(false
-                           && "Android Slam only supports mono camera case.");
+                    assert(false &&
+                           "Android Slam only supports mono camera case.");
 
                     // calibration2_->setParameter(calibration2_->getParameter(1)
                     // * scaleRowFactor, 1);
@@ -284,11 +284,12 @@ Settings::Settings(const SettingDesc& desc)
                 calibration1_->setParameter(
                     calibration1_->getParameter(2) * scaleColFactor, 2);
 
-                if ((sensor_ == System::STEREO || sensor_ == System::IMU_STEREO)
-                    && cameraType_ != Rectified)
+                if ((sensor_ == System::STEREO ||
+                     sensor_ == System::IMU_STEREO) &&
+                    cameraType_ != Rectified)
                 {
-                    assert(false
-                           && "Android Slam only supports mono camera case.");
+                    assert(false &&
+                           "Android Slam only supports mono camera case.");
 
                     // calibration2_->setParameter(calibration2_->getParameter(0)
                     // * scaleColFactor, 0);
@@ -316,8 +317,8 @@ Settings::Settings(const SettingDesc& desc)
     }
 
     // read imu
-    if (sensor_ == System::IMU_MONOCULAR || sensor_ == System::IMU_STEREO
-        || sensor_ == System::IMU_RGBD)
+    if (sensor_ == System::IMU_MONOCULAR || sensor_ == System::IMU_STEREO ||
+        sensor_ == System::IMU_RGBD)
     {
         noiseGyro_         = desc.imuInfo.noiseGyro;
         noiseAcc_          = desc.imuInfo.noiseAcc;
@@ -413,8 +414,8 @@ Settings::Settings(const std::string& configFile, const int& sensor)
     readImageInfo(fSettings);
     cout << "\t-Loaded image info" << endl;
 
-    if (sensor_ == System::IMU_MONOCULAR || sensor_ == System::IMU_STEREO
-        || sensor_ == System::IMU_RGBD)
+    if (sensor_ == System::IMU_MONOCULAR || sensor_ == System::IMU_STEREO ||
+        sensor_ == System::IMU_RGBD)
     {
         readIMU(fSettings);
         cout << "\t-Loaded IMU calibration" << endl;
@@ -462,7 +463,7 @@ void Settings::readCamera1(cv::FileStorage& fSettings)
         float cx = readParameter<float>(fSettings, "Camera1.cx", found);
         float cy = readParameter<float>(fSettings, "Camera1.cy", found);
 
-        vCalibration = {fx, fy, cx, cy};
+        vCalibration = { fx, fy, cx, cy };
 
         calibration1_   = new Pinhole(vCalibration);
         originalCalib1_ = new Pinhole(vCalibration);
@@ -493,8 +494,9 @@ void Settings::readCamera1(cv::FileStorage& fSettings)
         }
 
         // Check if we need to correct distortion from the images
-        if ((sensor_ == System::MONOCULAR || sensor_ == System::IMU_MONOCULAR)
-            && vPinHoleDistorsion1_.size() != 0)
+        if ((sensor_ == System::MONOCULAR ||
+             sensor_ == System::IMU_MONOCULAR) &&
+            vPinHoleDistorsion1_.size() != 0)
         {
             bNeedToUndistort_ = true;
         }
@@ -509,7 +511,7 @@ void Settings::readCamera1(cv::FileStorage& fSettings)
         float cx = readParameter<float>(fSettings, "Camera1.cx", found);
         float cy = readParameter<float>(fSettings, "Camera1.cy", found);
 
-        vCalibration = {fx, fy, cx, cy};
+        vCalibration = { fx, fy, cx, cy };
 
         calibration1_   = new Pinhole(vCalibration);
         originalCalib1_ = new Pinhole(vCalibration);
@@ -532,7 +534,7 @@ void Settings::readCamera1(cv::FileStorage& fSettings)
         float k2 = readParameter<float>(fSettings, "Camera1.k3", found);
         float k3 = readParameter<float>(fSettings, "Camera1.k4", found);
 
-        vCalibration = {fx, fy, cx, cy, k0, k1, k2, k3};
+        vCalibration = { fx, fy, cx, cy, k0, k1, k2, k3 };
 
         calibration1_   = new KannalaBrandt8(vCalibration);
         originalCalib1_ = new KannalaBrandt8(vCalibration);
@@ -543,7 +545,7 @@ void Settings::readCamera1(cv::FileStorage& fSettings)
                 fSettings, "Camera1.overlappingBegin", found);
             int colEnd =
                 readParameter<int>(fSettings, "Camera1.overlappingEnd", found);
-            vector<int> vOverlapping = {colBegin, colEnd};
+            vector<int> vOverlapping = { colBegin, colEnd };
 
             static_cast<KannalaBrandt8*>(calibration1_)->mvLappingArea =
                 vOverlapping;
@@ -571,7 +573,7 @@ void Settings::readCamera2(cv::FileStorage& fSettings)
         float cy = readParameter<float>(fSettings, "Camera2.cy", found);
 
 
-        vCalibration = {fx, fy, cx, cy};
+        vCalibration = { fx, fy, cx, cy };
 
         calibration2_   = new Pinhole(vCalibration);
         originalCalib2_ = new Pinhole(vCalibration);
@@ -615,7 +617,7 @@ void Settings::readCamera2(cv::FileStorage& fSettings)
         float k3 = readParameter<float>(fSettings, "Camera1.k4", found);
 
 
-        vCalibration = {fx, fy, cx, cy, k0, k1, k2, k3};
+        vCalibration = { fx, fy, cx, cy, k0, k1, k2, k3 };
 
         calibration2_   = new KannalaBrandt8(vCalibration);
         originalCalib2_ = new KannalaBrandt8(vCalibration);
@@ -624,7 +626,7 @@ void Settings::readCamera2(cv::FileStorage& fSettings)
             readParameter<int>(fSettings, "Camera2.overlappingBegin", found);
         int colEnd =
             readParameter<int>(fSettings, "Camera2.overlappingEnd", found);
-        vector<int> vOverlapping = {colBegin, colEnd};
+        vector<int> vOverlapping = { colBegin, colEnd };
 
         static_cast<KannalaBrandt8*>(calibration2_)->mvLappingArea =
             vOverlapping;
@@ -679,8 +681,8 @@ void Settings::readImageInfo(cv::FileStorage& fSettings)
                 calibration1_->getParameter(3) * scaleRowFactor, 3);
 
 
-            if ((sensor_ == System::STEREO || sensor_ == System::IMU_STEREO)
-                && cameraType_ != Rectified)
+            if ((sensor_ == System::STEREO || sensor_ == System::IMU_STEREO) &&
+                cameraType_ != Rectified)
             {
                 calibration2_->setParameter(
                     calibration2_->getParameter(1) * scaleRowFactor, 1);
@@ -707,8 +709,8 @@ void Settings::readImageInfo(cv::FileStorage& fSettings)
             calibration1_->setParameter(
                 calibration1_->getParameter(2) * scaleColFactor, 2);
 
-            if ((sensor_ == System::STEREO || sensor_ == System::IMU_STEREO)
-                && cameraType_ != Rectified)
+            if ((sensor_ == System::STEREO || sensor_ == System::IMU_STEREO) &&
+                cameraType_ != Rectified)
             {
                 calibration2_->setParameter(
                     calibration2_->getParameter(0) * scaleColFactor, 0);
@@ -804,8 +806,7 @@ void Settings::readViewer(cv::FileStorage& fSettings)
     imageViewerScale_ =
         readParameter<float>(fSettings, "Viewer.imageViewScale", found, false);
 
-    if (!found)
-        imageViewerScale_ = 1.0f;
+    if (!found) imageViewerScale_ = 1.0f;
 }
 
 void Settings::readLoadAndSave(cv::FileStorage& fSettings)
@@ -900,8 +901,8 @@ ostream& operator<<(std::ostream& output, const Settings& settings)
     output << "SLAM settings: " << endl;
 
     output << "\t-Camera 1 parameters (";
-    if (settings.cameraType_ == Settings::PinHole
-        || settings.cameraType_ == Settings::Rectified)
+    if (settings.cameraType_ == Settings::PinHole ||
+        settings.cameraType_ == Settings::Rectified)
     {
         output << "Pinhole";
     }
@@ -927,12 +928,12 @@ ostream& operator<<(std::ostream& output, const Settings& settings)
         output << " ]" << endl;
     }
 
-    if (settings.sensor_ == System::STEREO
-        || settings.sensor_ == System::IMU_STEREO)
+    if (settings.sensor_ == System::STEREO ||
+        settings.sensor_ == System::IMU_STEREO)
     {
         output << "\t-Camera 2 parameters (";
-        if (settings.cameraType_ == Settings::PinHole
-            || settings.cameraType_ == Settings::Rectified)
+        if (settings.cameraType_ == Settings::PinHole ||
+            settings.cameraType_ == Settings::Rectified)
         {
             output << "Pinhole";
         }
@@ -982,9 +983,9 @@ ostream& operator<<(std::ostream& output, const Settings& settings)
         }
         output << " ]" << endl;
 
-        if ((settings.sensor_ == System::STEREO
-             || settings.sensor_ == System::IMU_STEREO)
-            && settings.cameraType_ == Settings::KannalaBrandt)
+        if ((settings.sensor_ == System::STEREO ||
+             settings.sensor_ == System::IMU_STEREO) &&
+            settings.cameraType_ == Settings::KannalaBrandt)
         {
             output << "\t-Camera 2 parameters after resize: [ ";
             for (size_t i = 0; i < settings.calibration2_->size(); i++)
@@ -998,8 +999,8 @@ ostream& operator<<(std::ostream& output, const Settings& settings)
     output << "\t-Sequence FPS: " << settings.fps_ << endl;
 
     // Stereo stuff
-    if (settings.sensor_ == System::STEREO
-        || settings.sensor_ == System::IMU_STEREO)
+    if (settings.sensor_ == System::STEREO ||
+        settings.sensor_ == System::IMU_STEREO)
     {
         output << "\t-Stereo baseline: " << settings.b_ << endl;
         output << "\t-Stereo depth threshold : " << settings.thDepth_ << endl;
@@ -1019,9 +1020,9 @@ ostream& operator<<(std::ostream& output, const Settings& settings)
         }
     }
 
-    if (settings.sensor_ == System::IMU_MONOCULAR
-        || settings.sensor_ == System::IMU_STEREO
-        || settings.sensor_ == System::IMU_RGBD)
+    if (settings.sensor_ == System::IMU_MONOCULAR ||
+        settings.sensor_ == System::IMU_STEREO ||
+        settings.sensor_ == System::IMU_RGBD)
     {
         output << "\t-Gyro noise: " << settings.noiseGyro_ << endl;
         output << "\t-Accelerometer noise: " << settings.noiseAcc_ << endl;
@@ -1030,8 +1031,8 @@ ostream& operator<<(std::ostream& output, const Settings& settings)
         output << "\t-IMU frequency: " << settings.imuFrequency_ << endl;
     }
 
-    if (settings.sensor_ == System::RGBD
-        || settings.sensor_ == System::IMU_RGBD)
+    if (settings.sensor_ == System::RGBD ||
+        settings.sensor_ == System::IMU_RGBD)
     {
         output << "\t-RGB-D depth map factor: " << settings.depthMapFactor_
                << endl;

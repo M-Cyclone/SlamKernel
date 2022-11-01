@@ -61,8 +61,8 @@ void Atlas::CreateNewMap()
     {
         if (!mspMaps.empty() && mnLastInitKFidMap < mpCurrentMap->GetMaxKFid())
             mnLastInitKFidMap =
-                mpCurrentMap->GetMaxKFid()
-                + 1;  // The init KF is the next of current maximum
+                mpCurrentMap->GetMaxKFid() +
+                1;  // The init KF is the next of current maximum
 
         mpCurrentMap->SetStoredMap();
         std::cout << "Stored map with ID: " << mpCurrentMap->GetId()
@@ -115,12 +115,9 @@ GeometricCamera* Atlas::AddCamera(GeometricCamera* pCam)
     for (size_t i = 0; i < mvpCameras.size(); ++i)
     {
         GeometricCamera* pCam_i = mvpCameras[i];
-        if (!pCam)
-            std::cout << "Not pCam" << std::endl;
-        if (!pCam_i)
-            std::cout << "Not pCam_i" << std::endl;
-        if (pCam->GetType() != pCam_i->GetType())
-            continue;
+        if (!pCam) std::cout << "Not pCam" << std::endl;
+        if (!pCam_i) std::cout << "Not pCam_i" << std::endl;
+        if (pCam->GetType() != pCam_i->GetType()) continue;
 
         if (pCam->GetType() == GeometricCamera::CAM_PINHOLE)
         {
@@ -248,10 +245,8 @@ void Atlas::clearAtlas()
 Map* Atlas::GetCurrentMap()
 {
     std::unique_lock<std::mutex> lock(mMutexAtlas);
-    if (!mpCurrentMap)
-        CreateNewMap();
-    while (mpCurrentMap->IsBad())
-        usleep(3000);
+    if (!mpCurrentMap) CreateNewMap();
+    while (mpCurrentMap->IsBad()) usleep(3000);
 
     return mpCurrentMap;
 }
@@ -304,8 +299,8 @@ void Atlas::PreSave()
     {
         if (!mspMaps.empty() && mnLastInitKFidMap < mpCurrentMap->GetMaxKFid())
             mnLastInitKFidMap =
-                mpCurrentMap->GetMaxKFid()
-                + 1;  // The init KF is the next of current maximum
+                mpCurrentMap->GetMaxKFid() +
+                1;  // The init KF is the next of current maximum
     }
 
     struct compFunctor
@@ -322,8 +317,7 @@ void Atlas::PreSave()
     std::set<GeometricCamera*> spCams(mvpCameras.begin(), mvpCameras.end());
     for (Map* pMi : mvpBackupMaps)
     {
-        if (!pMi || pMi->IsBad())
-            continue;
+        if (!pMi || pMi->IsBad()) continue;
 
         if (pMi->GetAllKeyFrames().size() == 0)
         {

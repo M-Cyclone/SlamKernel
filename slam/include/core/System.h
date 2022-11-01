@@ -65,10 +65,7 @@ public:
         }
     }
 
-    static void SetTh(eLevel _th)
-    {
-        th = _th;
-    }
+    static void SetTh(eLevel _th) { th = _th; }
 };
 
 class Atlas;
@@ -207,16 +204,10 @@ public:
 
     float GetImageScale();
 
-    Atlas& getAtlas() const
-    {
-        return *mpAtlas;
-    }
+    Atlas&    getAtlas() const { return *mpAtlas; }
     Tracking& getTracker() const;
 
-    int getTrackingState() const
-    {
-        return mTrackingState;
-    }
+    int getTrackingState() const { return mTrackingState; }
 
 private:
     // Input sensor

@@ -169,9 +169,8 @@ MapPoint::MapPoint(const Eigen::Vector3f& Pos,
     Eigen::Vector3f PC   = mWorldPos - Ow;
     const float     dist = PC.norm();
     const int   level    = (pFrame->Nleft == -1) ? pFrame->mvKeysUn[idxF].octave
-                           : (idxF < pFrame->Nleft)
-                               ? pFrame->mvKeys[idxF].octave
-                               : pFrame->mvKeysRight[idxF].octave;
+                         : (idxF < pFrame->Nleft) ? pFrame->mvKeys[idxF].octave
+                                                  : pFrame->mvKeysRight[idxF].octave;
     const float levelScaleFactor = pFrame->mvScaleFactors[level];
     const int   nLevels          = pFrame->mnScaleLevels;
 
@@ -268,17 +267,14 @@ void MapPoint::EraseObservation(KeyFrame* pKF)
 
             mObservations.erase(pKF);
 
-            if (mpRefKF == pKF)
-                mpRefKF = mObservations.begin()->first;
+            if (mpRefKF == pKF) mpRefKF = mObservations.begin()->first;
 
             // If only 2 observations or less, discard point
-            if (nObs <= 2)
-                bBad = true;
+            if (nObs <= 2) bBad = true;
         }
     }
 
-    if (bBad)
-        SetBadFlag();
+    if (bBad) SetBadFlag();
 }
 
 
@@ -331,8 +327,7 @@ MapPoint* MapPoint::GetReplaced()
 
 void MapPoint::Replace(MapPoint* pMP)
 {
-    if (pMP->mnId == this->mnId)
-        return;
+    if (pMP->mnId == this->mnId) return;
 
     int                                       nvisible, nfound;
     std::map<KeyFrame*, std::tuple<int, int>> obs;
@@ -423,13 +418,11 @@ void MapPoint::ComputeDistinctiveDescriptors()
 
     {
         std::unique_lock<std::mutex> lock1(mMutexFeatures);
-        if (mbBad)
-            return;
+        if (mbBad) return;
         observations = mObservations;
     }
 
-    if (observations.empty())
-        return;
+    if (observations.empty()) return;
 
     vDescriptors.reserve(observations.size());
 
@@ -456,8 +449,7 @@ void MapPoint::ComputeDistinctiveDescriptors()
         }
     }
 
-    if (vDescriptors.empty())
-        return;
+    if (vDescriptors.empty()) return;
 
     // Compute distances between them
     const size_t N = vDescriptors.size();
@@ -526,15 +518,13 @@ void MapPoint::UpdateNormalAndDepth()
     {
         std::unique_lock<std::mutex> lock1(mMutexFeatures);
         std::unique_lock<std::mutex> lock2(mMutexPos);
-        if (mbBad)
-            return;
+        if (mbBad) return;
         observations = mObservations;
         pRefKF       = mpRefKF;
         Pos          = mWorldPos;
     }
 
-    if (observations.empty())
-        return;
+    if (observations.empty()) return;
 
     Eigen::Vector3f normal;
     normal.setZero();
@@ -721,8 +711,7 @@ void MapPoint::PostLoad(std::map<long unsigned int, KeyFrame*>& mpKFid,
     if (mBackupReplacedId >= 0)
     {
         auto it = mpMPid.find(mBackupReplacedId);
-        if (it != mpMPid.end())
-            mpReplaced = it->second;
+        if (it != mpMPid.end()) mpReplaced = it->second;
     }
 
     mObservations.clear();

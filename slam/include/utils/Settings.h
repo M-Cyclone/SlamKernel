@@ -144,19 +144,10 @@ public:
     /*
      * Getter methods
      */
-    CameraType cameraType()
-    {
-        return cameraType_;
-    }
-    GeometricCamera* camera1()
-    {
-        return calibration1_;
-    }
-    GeometricCamera* camera2()
-    {
-        return calibration2_;
-    }
-    cv::Mat camera1DistortionCoef()
+    CameraType       cameraType() { return cameraType_; }
+    GeometricCamera* camera1() { return calibration1_; }
+    GeometricCamera* camera2() { return calibration2_; }
+    cv::Mat          camera1DistortionCoef()
     {
         return cv::Mat(vPinHoleDistorsion1_.size(),
                        1,
@@ -171,184 +162,58 @@ public:
                        vPinHoleDistorsion1_.data());
     }
 
-    Sophus::SE3f Tlr()
-    {
-        return Tlr_;
-    }
-    float bf()
-    {
-        return bf_;
-    }
-    float b()
-    {
-        return b_;
-    }
-    float thDepth()
-    {
-        return thDepth_;
-    }
+    Sophus::SE3f Tlr() { return Tlr_; }
+    float        bf() { return bf_; }
+    float        b() { return b_; }
+    float        thDepth() { return thDepth_; }
 
-    bool needToUndistort()
-    {
-        return bNeedToUndistort_;
-    }
+    bool needToUndistort() { return bNeedToUndistort_; }
 
-    cv::Size newImSize()
-    {
-        return newImSize_;
-    }
-    float fps()
-    {
-        return fps_;
-    }
-    bool rgb()
-    {
-        return bRGB_;
-    }
-    bool needToResize()
-    {
-        return bNeedToResize1_;
-    }
-    bool needToRectify()
-    {
-        return bNeedToRectify_;
-    }
+    cv::Size newImSize() { return newImSize_; }
+    float    fps() { return fps_; }
+    bool     rgb() { return bRGB_; }
+    bool     needToResize() { return bNeedToResize1_; }
+    bool     needToRectify() { return bNeedToRectify_; }
 
-    float noiseGyro()
-    {
-        return noiseGyro_;
-    }
-    float noiseAcc()
-    {
-        return noiseAcc_;
-    }
-    float gyroWalk()
-    {
-        return gyroWalk_;
-    }
-    float accWalk()
-    {
-        return accWalk_;
-    }
-    float imuFrequency()
-    {
-        return imuFrequency_;
-    }
-    Sophus::SE3f Tbc()
-    {
-        return Tbc_;
-    }
-    bool insertKFsWhenLost()
-    {
-        return insertKFsWhenLost_;
-    }
+    float        noiseGyro() { return noiseGyro_; }
+    float        noiseAcc() { return noiseAcc_; }
+    float        gyroWalk() { return gyroWalk_; }
+    float        accWalk() { return accWalk_; }
+    float        imuFrequency() { return imuFrequency_; }
+    Sophus::SE3f Tbc() { return Tbc_; }
+    bool         insertKFsWhenLost() { return insertKFsWhenLost_; }
 
-    float depthMapFactor()
-    {
-        return depthMapFactor_;
-    }
+    float depthMapFactor() { return depthMapFactor_; }
 
-    int nFeatures()
-    {
-        return nFeatures_;
-    }
-    int nLevels()
-    {
-        return nLevels_;
-    }
-    float initThFAST()
-    {
-        return initThFAST_;
-    }
-    float minThFAST()
-    {
-        return minThFAST_;
-    }
-    float scaleFactor()
-    {
-        return scaleFactor_;
-    }
+    int   nFeatures() { return nFeatures_; }
+    int   nLevels() { return nLevels_; }
+    float initThFAST() { return initThFAST_; }
+    float minThFAST() { return minThFAST_; }
+    float scaleFactor() { return scaleFactor_; }
 
-    float keyFrameSize()
-    {
-        return keyFrameSize_;
-    }
-    float keyFrameLineWidth()
-    {
-        return keyFrameLineWidth_;
-    }
-    float graphLineWidth()
-    {
-        return graphLineWidth_;
-    }
-    float pointSize()
-    {
-        return pointSize_;
-    }
-    float cameraSize()
-    {
-        return cameraSize_;
-    }
-    float cameraLineWidth()
-    {
-        return cameraLineWidth_;
-    }
-    float viewPointX()
-    {
-        return viewPointX_;
-    }
-    float viewPointY()
-    {
-        return viewPointY_;
-    }
-    float viewPointZ()
-    {
-        return viewPointZ_;
-    }
-    float viewPointF()
-    {
-        return viewPointF_;
-    }
-    float imageViewerScale()
-    {
-        return imageViewerScale_;
-    }
+    float keyFrameSize() { return keyFrameSize_; }
+    float keyFrameLineWidth() { return keyFrameLineWidth_; }
+    float graphLineWidth() { return graphLineWidth_; }
+    float pointSize() { return pointSize_; }
+    float cameraSize() { return cameraSize_; }
+    float cameraLineWidth() { return cameraLineWidth_; }
+    float viewPointX() { return viewPointX_; }
+    float viewPointY() { return viewPointY_; }
+    float viewPointZ() { return viewPointZ_; }
+    float viewPointF() { return viewPointF_; }
+    float imageViewerScale() { return imageViewerScale_; }
 
-    std::string atlasLoadFile()
-    {
-        return sLoadFrom_;
-    }
-    std::string atlasSaveFile()
-    {
-        return sSaveto_;
-    }
+    std::string atlasLoadFile() { return sLoadFrom_; }
+    std::string atlasSaveFile() { return sSaveto_; }
 
-    float thFarPoints()
-    {
-        return thFarPoints_;
-    }
+    float thFarPoints() { return thFarPoints_; }
 
-    cv::Mat M1l()
-    {
-        return M1l_;
-    }
-    cv::Mat M2l()
-    {
-        return M2l_;
-    }
-    cv::Mat M1r()
-    {
-        return M1r_;
-    }
-    cv::Mat M2r()
-    {
-        return M2r_;
-    }
+    cv::Mat M1l() { return M1l_; }
+    cv::Mat M2l() { return M2l_; }
+    cv::Mat M1r() { return M1r_; }
+    cv::Mat M2r() { return M2r_; }
 
-    int getSensor() const
-    {
-        return sensor_;
-    }
+    int getSensor() const { return sensor_; }
 
 private:
     template <typename T>

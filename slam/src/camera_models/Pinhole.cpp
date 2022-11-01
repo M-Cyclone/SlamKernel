@@ -29,13 +29,13 @@ namespace ORB_SLAM3
 
 long unsigned int GeometricCamera::nNextId = 0;
 
-cv::Point2f Pinhole::project(const cv::Point3f &p3D)
+cv::Point2f Pinhole::project(const cv::Point3f& p3D)
 {
     return cv::Point2f(mvParameters[0] * p3D.x / p3D.z + mvParameters[2],
                        mvParameters[1] * p3D.y / p3D.z + mvParameters[3]);
 }
 
-Eigen::Vector2d Pinhole::project(const Eigen::Vector3d &v3D)
+Eigen::Vector2d Pinhole::project(const Eigen::Vector3d& v3D)
 {
     Eigen::Vector2d res;
     res[0] = mvParameters[0] * v3D[0] / v3D[2] + mvParameters[2];
@@ -44,7 +44,7 @@ Eigen::Vector2d Pinhole::project(const Eigen::Vector3d &v3D)
     return res;
 }
 
-Eigen::Vector2f Pinhole::project(const Eigen::Vector3f &v3D)
+Eigen::Vector2f Pinhole::project(const Eigen::Vector3f& v3D)
 {
     Eigen::Vector2f res;
     res[0] = mvParameters[0] * v3D[0] / v3D[2] + mvParameters[2];
@@ -53,32 +53,32 @@ Eigen::Vector2f Pinhole::project(const Eigen::Vector3f &v3D)
     return res;
 }
 
-Eigen::Vector2f Pinhole::projectMat(const cv::Point3f &p3D)
+Eigen::Vector2f Pinhole::projectMat(const cv::Point3f& p3D)
 {
     cv::Point2f point = this->project(p3D);
     return Eigen::Vector2f(point.x, point.y);
 }
 
-float Pinhole::uncertainty2(const Eigen::Matrix<double, 2, 1> &p2D)
+float Pinhole::uncertainty2(const Eigen::Matrix<double, 2, 1>& p2D)
 {
     return 1.0;
 }
 
-Eigen::Vector3f Pinhole::unprojectEig(const cv::Point2f &p2D)
+Eigen::Vector3f Pinhole::unprojectEig(const cv::Point2f& p2D)
 {
     return Eigen::Vector3f((p2D.x - mvParameters[2]) / mvParameters[0],
                            (p2D.y - mvParameters[3]) / mvParameters[1],
                            1.f);
 }
 
-cv::Point3f Pinhole::unproject(const cv::Point2f &p2D)
+cv::Point3f Pinhole::unproject(const cv::Point2f& p2D)
 {
     return cv::Point3f((p2D.x - mvParameters[2]) / mvParameters[0],
                        (p2D.y - mvParameters[3]) / mvParameters[1],
                        1.f);
 }
 
-Eigen::Matrix<double, 2, 3> Pinhole::projectJac(const Eigen::Vector3d &v3D)
+Eigen::Matrix<double, 2, 3> Pinhole::projectJac(const Eigen::Vector3d& v3D)
 {
     Eigen::Matrix<double, 2, 3> Jac;
     Jac(0, 0) = mvParameters[0] / v3D[2];
@@ -91,12 +91,12 @@ Eigen::Matrix<double, 2, 3> Pinhole::projectJac(const Eigen::Vector3d &v3D)
     return Jac;
 }
 
-bool Pinhole::ReconstructWithTwoViews(const std::vector<cv::KeyPoint> &vKeys1,
-                                      const std::vector<cv::KeyPoint> &vKeys2,
-                                      const std::vector<int>   &vMatches12,
-                                      Sophus::SE3f             &T21,
-                                      std::vector<cv::Point3f> &vP3D,
-                                      std::vector<bool>        &vbTriangulated)
+bool Pinhole::ReconstructWithTwoViews(const std::vector<cv::KeyPoint>& vKeys1,
+                                      const std::vector<cv::KeyPoint>& vKeys2,
+                                      const std::vector<int>&   vMatches12,
+                                      Sophus::SE3f&             T21,
+                                      std::vector<cv::Point3f>& vP3D,
+                                      std::vector<bool>&        vbTriangulated)
 {
     if (!tvr)
     {
@@ -131,11 +131,11 @@ Eigen::Matrix3f Pinhole::toK_()
 }
 
 
-bool Pinhole::epipolarConstrain(GeometricCamera       *pCamera2,
-                                const cv::KeyPoint    &kp1,
-                                const cv::KeyPoint    &kp2,
-                                const Eigen::Matrix3f &R12,
-                                const Eigen::Vector3f &t12,
+bool Pinhole::epipolarConstrain(GeometricCamera*       pCamera2,
+                                const cv::KeyPoint&    kp1,
+                                const cv::KeyPoint&    kp2,
+                                const Eigen::Matrix3f& R12,
+                                const Eigen::Vector3f& t12,
                                 const float            sigmaLevel,
                                 const float            unc)
 {
@@ -154,22 +154,21 @@ bool Pinhole::epipolarConstrain(GeometricCamera       *pCamera2,
 
     const float den = a * a + b * b;
 
-    if (den == 0)
-        return false;
+    if (den == 0) return false;
 
     const float dsqr = num * num / den;
 
     return dsqr < 3.84 * unc;
 }
 
-std::ostream &operator<<(std::ostream &os, const Pinhole &ph)
+std::ostream& operator<<(std::ostream& os, const Pinhole& ph)
 {
     os << ph.mvParameters[0] << " " << ph.mvParameters[1] << " "
        << ph.mvParameters[2] << " " << ph.mvParameters[3];
     return os;
 }
 
-std::istream &operator>>(std::istream &is, Pinhole &ph)
+std::istream& operator>>(std::istream& is, Pinhole& ph)
 {
     float nextParam;
     for (size_t i = 0; i < 4; i++)
@@ -181,15 +180,13 @@ std::istream &operator>>(std::istream &is, Pinhole &ph)
     return is;
 }
 
-bool Pinhole::IsEqual(GeometricCamera *pCam)
+bool Pinhole::IsEqual(GeometricCamera* pCam)
 {
-    if (pCam->GetType() != GeometricCamera::CAM_PINHOLE)
-        return false;
+    if (pCam->GetType() != GeometricCamera::CAM_PINHOLE) return false;
 
-    Pinhole *pPinholeCam = (Pinhole *)pCam;
+    Pinhole* pPinholeCam = (Pinhole*)pCam;
 
-    if (size() != pPinholeCam->size())
-        return false;
+    if (size() != pPinholeCam->size()) return false;
 
     bool is_same_camera = true;
     for (size_t i = 0; i < size(); ++i)

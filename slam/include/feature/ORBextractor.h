@@ -34,10 +34,10 @@ class ExtractorNode
 public:
     ExtractorNode() : bNoMore(false) {}
 
-    void DivideNode(ExtractorNode &n1,
-                    ExtractorNode &n2,
-                    ExtractorNode &n3,
-                    ExtractorNode &n4);
+    void DivideNode(ExtractorNode& n1,
+                    ExtractorNode& n2,
+                    ExtractorNode& n3,
+                    ExtractorNode& n4);
 
     std::vector<cv::KeyPoint>          vKeys;
     cv::Point2i                        UL, UR, BL, BR;
@@ -67,34 +67,22 @@ public:
     // Mask is ignored in the current implementation.
     int operator()(cv::InputArray             _image,
                    cv::InputArray             _mask,
-                   std::vector<cv::KeyPoint> &_keypoints,
+                   std::vector<cv::KeyPoint>& _keypoints,
                    cv::OutputArray            _descriptors,
-                   std::vector<int>          &vLappingArea);
+                   std::vector<int>&          vLappingArea);
 
-    int inline GetLevels()
-    {
-        return nlevels;
-    }
+    int inline GetLevels() { return nlevels; }
 
-    float inline GetScaleFactor()
-    {
-        return scaleFactor;
-    }
+    float inline GetScaleFactor() { return scaleFactor; }
 
-    std::vector<float> inline GetScaleFactors()
-    {
-        return mvScaleFactor;
-    }
+    std::vector<float> inline GetScaleFactors() { return mvScaleFactor; }
 
     std::vector<float> inline GetInverseScaleFactors()
     {
         return mvInvScaleFactor;
     }
 
-    std::vector<float> inline GetScaleSigmaSquares()
-    {
-        return mvLevelSigma2;
-    }
+    std::vector<float> inline GetScaleSigmaSquares() { return mvLevelSigma2; }
 
     std::vector<float> inline GetInverseScaleSigmaSquares()
     {
@@ -106,18 +94,18 @@ public:
 protected:
     void ComputePyramid(cv::Mat image);
     void ComputeKeyPointsOctTree(
-        std::vector<std::vector<cv::KeyPoint>> &allKeypoints);
-    std::vector<cv::KeyPoint>
-    DistributeOctTree(const std::vector<cv::KeyPoint> &vToDistributeKeys,
-                      const int                       &minX,
-                      const int                       &maxX,
-                      const int                       &minY,
-                      const int                       &maxY,
-                      const int                       &nFeatures,
-                      const int                       &level);
+        std::vector<std::vector<cv::KeyPoint>>& allKeypoints);
+    std::vector<cv::KeyPoint> DistributeOctTree(
+        const std::vector<cv::KeyPoint>& vToDistributeKeys,
+        const int&                       minX,
+        const int&                       maxX,
+        const int&                       minY,
+        const int&                       maxY,
+        const int&                       nFeatures,
+        const int&                       level);
 
-    void
-    ComputeKeyPointsOld(std::vector<std::vector<cv::KeyPoint>> &allKeypoints);
+    void ComputeKeyPointsOld(
+        std::vector<std::vector<cv::KeyPoint>>& allKeypoints);
     std::vector<cv::Point> pattern;
 
     int    nfeatures;

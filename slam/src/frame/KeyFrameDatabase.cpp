@@ -126,9 +126,9 @@ vector<KeyFrame*> KeyFrameDatabase::DetectLoopCandidates(KeyFrame* pKF,
             for (auto lit = lKFs.begin(), lend = lKFs.end(); lit != lend; lit++)
             {
                 KeyFrame* pKFi = *lit;
-                if (pKFi->GetMap()
-                    == pKF->GetMap())  // For consider a loop candidate it a
-                                       // candidate it must be in the same map
+                if (pKFi->GetMap() ==
+                    pKF->GetMap())  // For consider a loop candidate it a
+                                    // candidate it must be in the same map
                 {
                     if (pKFi->mnLoopQuery != pKF->mnId)
                     {
@@ -145,8 +145,7 @@ vector<KeyFrame*> KeyFrameDatabase::DetectLoopCandidates(KeyFrame* pKF,
         }
     }
 
-    if (lKFsSharingWords.empty())
-        return vector<KeyFrame*>();
+    if (lKFsSharingWords.empty()) return vector<KeyFrame*>();
 
     list<pair<float, KeyFrame*>> lScoreAndMatch;
 
@@ -179,13 +178,11 @@ vector<KeyFrame*> KeyFrameDatabase::DetectLoopCandidates(KeyFrame* pKF,
             float si = mpVoc->score(pKF->mBowVec, pKFi->mBowVec);
 
             pKFi->mLoopScore = si;
-            if (si >= minScore)
-                lScoreAndMatch.push_back(make_pair(si, pKFi));
+            if (si >= minScore) lScoreAndMatch.push_back(make_pair(si, pKFi));
         }
     }
 
-    if (lScoreAndMatch.empty())
-        return vector<KeyFrame*>();
+    if (lScoreAndMatch.empty()) return vector<KeyFrame*>();
 
     list<pair<float, KeyFrame*>> lAccScoreAndMatch;
     float                        bestAccScore = minScore;
@@ -205,8 +202,8 @@ vector<KeyFrame*> KeyFrameDatabase::DetectLoopCandidates(KeyFrame* pKF,
              vit++)
         {
             KeyFrame* pKF2 = *vit;
-            if (pKF2->mnLoopQuery == pKF->mnId
-                && pKF2->mnLoopWords > minCommonWords)
+            if (pKF2->mnLoopQuery == pKF->mnId &&
+                pKF2->mnLoopWords > minCommonWords)
             {
                 accScore += pKF2->mLoopScore;
                 if (pKF2->mLoopScore > bestScore)
@@ -218,8 +215,7 @@ vector<KeyFrame*> KeyFrameDatabase::DetectLoopCandidates(KeyFrame* pKF,
         }
 
         lAccScoreAndMatch.push_back(make_pair(accScore, pBestKF));
-        if (accScore > bestAccScore)
-            bestAccScore = accScore;
+        if (accScore > bestAccScore) bestAccScore = accScore;
     }
 
     // Return all those keyframes with a score higher than 0.75*bestScore
@@ -270,9 +266,9 @@ void KeyFrameDatabase::DetectCandidates(KeyFrame*          pKF,
             for (auto lit = lKFs.begin(), lend = lKFs.end(); lit != lend; lit++)
             {
                 KeyFrame* pKFi = *lit;
-                if (pKFi->GetMap()
-                    == pKF->GetMap())  // For consider a loop candidate it a
-                                       // candidate it must be in the same map
+                if (pKFi->GetMap() ==
+                    pKF->GetMap())  // For consider a loop candidate it a
+                                    // candidate it must be in the same map
                 {
                     if (pKFi->mnLoopQuery != pKF->mnId)
                     {
@@ -302,8 +298,7 @@ void KeyFrameDatabase::DetectCandidates(KeyFrame*          pKF,
         }
     }
 
-    if (lKFsSharingWordsLoop.empty() && lKFsSharingWordsMerge.empty())
-        return;
+    if (lKFsSharingWordsLoop.empty() && lKFsSharingWordsMerge.empty()) return;
 
     if (!lKFsSharingWordsLoop.empty())
     {
@@ -367,8 +362,8 @@ void KeyFrameDatabase::DetectCandidates(KeyFrame*          pKF,
                      vit++)
                 {
                     KeyFrame* pKF2 = *vit;
-                    if (pKF2->mnLoopQuery == pKF->mnId
-                        && pKF2->mnLoopWords > minCommonWords)
+                    if (pKF2->mnLoopQuery == pKF->mnId &&
+                        pKF2->mnLoopWords > minCommonWords)
                     {
                         accScore += pKF2->mLoopScore;
                         if (pKF2->mLoopScore > bestScore)
@@ -380,8 +375,7 @@ void KeyFrameDatabase::DetectCandidates(KeyFrame*          pKF,
                 }
 
                 lAccScoreAndMatch.push_back(make_pair(accScore, pBestKF));
-                if (accScore > bestAccScore)
-                    bestAccScore = accScore;
+                if (accScore > bestAccScore) bestAccScore = accScore;
             }
 
             // Return all those keyframes with a score higher than
@@ -471,8 +465,8 @@ void KeyFrameDatabase::DetectCandidates(KeyFrame*          pKF,
                      vit++)
                 {
                     KeyFrame* pKF2 = *vit;
-                    if (pKF2->mnMergeQuery == pKF->mnId
-                        && pKF2->mnMergeWords > minCommonWords)
+                    if (pKF2->mnMergeQuery == pKF->mnId &&
+                        pKF2->mnMergeWords > minCommonWords)
                     {
                         accScore += pKF2->mMergeScore;
                         if (pKF2->mMergeScore > bestScore)
@@ -484,8 +478,7 @@ void KeyFrameDatabase::DetectCandidates(KeyFrame*          pKF,
                 }
 
                 lAccScoreAndMatch.push_back(make_pair(accScore, pBestKF));
-                if (accScore > bestAccScore)
-                    bestAccScore = accScore;
+                if (accScore > bestAccScore) bestAccScore = accScore;
             }
 
             // Return all those keyframes with a score higher than
@@ -565,8 +558,7 @@ void KeyFrameDatabase::DetectBestCandidates(KeyFrame*          pKF,
             }
         }
     }
-    if (lKFsSharingWords.empty())
-        return;
+    if (lKFsSharingWords.empty()) return;
 
     // Only compare against those keyframes that share enough words
     int maxCommonWords = 0;
@@ -605,8 +597,7 @@ void KeyFrameDatabase::DetectBestCandidates(KeyFrame*          pKF,
         }
     }
 
-    if (lScoreAndMatch.empty())
-        return;
+    if (lScoreAndMatch.empty()) return;
 
     list<pair<float, KeyFrame*>> lAccScoreAndMatch;
     float                        bestAccScore = 0;
@@ -626,8 +617,7 @@ void KeyFrameDatabase::DetectBestCandidates(KeyFrame*          pKF,
              vit++)
         {
             KeyFrame* pKF2 = *vit;
-            if (pKF2->mnPlaceRecognitionQuery != pKF->mnId)
-                continue;
+            if (pKF2->mnPlaceRecognitionQuery != pKF->mnId) continue;
 
             accScore += pKF2->mPlaceRecognitionScore;
             if (pKF2->mPlaceRecognitionScore > bestScore)
@@ -637,8 +627,7 @@ void KeyFrameDatabase::DetectBestCandidates(KeyFrame*          pKF,
             }
         }
         lAccScoreAndMatch.push_back(make_pair(accScore, pBestKF));
-        if (accScore > bestAccScore)
-            bestAccScore = accScore;
+        if (accScore > bestAccScore) bestAccScore = accScore;
     }
 
     // Return all those keyframes with a score higher than 0.75*bestScore
@@ -705,7 +694,6 @@ void KeyFrameDatabase::DetectNBestCandidates(KeyFrame*          pKF,
                     pKFi->mnPlaceRecognitionWords = 0;
                     if (!spConnectedKF.count(pKFi))
                     {
-
                         pKFi->mnPlaceRecognitionQuery = pKF->mnId;
                         lKFsSharingWords.push_back(pKFi);
                     }
@@ -714,8 +702,7 @@ void KeyFrameDatabase::DetectNBestCandidates(KeyFrame*          pKF,
             }
         }
     }
-    if (lKFsSharingWords.empty())
-        return;
+    if (lKFsSharingWords.empty()) return;
 
     // Only compare against those keyframes that share enough words
     int maxCommonWords = 0;
@@ -749,8 +736,7 @@ void KeyFrameDatabase::DetectNBestCandidates(KeyFrame*          pKF,
         }
     }
 
-    if (lScoreAndMatch.empty())
-        return;
+    if (lScoreAndMatch.empty()) return;
 
     list<pair<float, KeyFrame*>> lAccScoreAndMatch;
     float                        bestAccScore = 0;
@@ -770,8 +756,7 @@ void KeyFrameDatabase::DetectNBestCandidates(KeyFrame*          pKF,
              vit++)
         {
             KeyFrame* pKF2 = *vit;
-            if (pKF2->mnPlaceRecognitionQuery != pKF->mnId)
-                continue;
+            if (pKF2->mnPlaceRecognitionQuery != pKF->mnId) continue;
 
             accScore += pKF2->mPlaceRecognitionScore;
             if (pKF2->mPlaceRecognitionScore > bestScore)
@@ -781,8 +766,7 @@ void KeyFrameDatabase::DetectNBestCandidates(KeyFrame*          pKF,
             }
         }
         lAccScoreAndMatch.push_back(make_pair(accScore, pBestKF));
-        if (accScore > bestAccScore)
-            bestAccScore = accScore;
+        if (accScore > bestAccScore) bestAccScore = accScore;
     }
 
     lAccScoreAndMatch.sort(compFirst);
@@ -792,24 +776,23 @@ void KeyFrameDatabase::DetectNBestCandidates(KeyFrame*          pKF,
     set<KeyFrame*> spAlreadyAddedKF;
     int            i  = 0;
     auto           it = lAccScoreAndMatch.begin();
-    while (i < lAccScoreAndMatch.size()
-           && (vpLoopCand.size() < nNumCandidates
-               || vpMergeCand.size() < nNumCandidates))
+    while (i < lAccScoreAndMatch.size() &&
+           (vpLoopCand.size() < nNumCandidates ||
+            vpMergeCand.size() < nNumCandidates))
     {
         KeyFrame* pKFi = it->second;
-        if (pKFi->isBad())
-            continue;
+        if (pKFi->isBad()) continue;
 
         if (!spAlreadyAddedKF.count(pKFi))
         {
-            if (pKF->GetMap() == pKFi->GetMap()
-                && vpLoopCand.size() < nNumCandidates)
+            if (pKF->GetMap() == pKFi->GetMap() &&
+                vpLoopCand.size() < nNumCandidates)
             {
                 vpLoopCand.push_back(pKFi);
             }
-            else if (pKF->GetMap() != pKFi->GetMap()
-                     && vpMergeCand.size() < nNumCandidates
-                     && !pKFi->GetMap()->IsBad())
+            else if (pKF->GetMap() != pKFi->GetMap() &&
+                     vpMergeCand.size() < nNumCandidates &&
+                     !pKFi->GetMap()->IsBad())
             {
                 vpMergeCand.push_back(pKFi);
             }
@@ -849,8 +832,7 @@ vector<KeyFrame*> KeyFrameDatabase::DetectRelocalizationCandidates(Frame* F,
             }
         }
     }
-    if (lKFsSharingWords.empty())
-        return vector<KeyFrame*>();
+    if (lKFsSharingWords.empty()) return vector<KeyFrame*>();
 
     // Only compare against those keyframes that share enough words
     int maxCommonWords = 0;
@@ -884,8 +866,7 @@ vector<KeyFrame*> KeyFrameDatabase::DetectRelocalizationCandidates(Frame* F,
         }
     }
 
-    if (lScoreAndMatch.empty())
-        return vector<KeyFrame*>();
+    if (lScoreAndMatch.empty()) return vector<KeyFrame*>();
 
     list<pair<float, KeyFrame*>> lAccScoreAndMatch;
     float                        bestAccScore = 0;
@@ -905,8 +886,7 @@ vector<KeyFrame*> KeyFrameDatabase::DetectRelocalizationCandidates(Frame* F,
              vit++)
         {
             KeyFrame* pKF2 = *vit;
-            if (pKF2->mnRelocQuery != F->mnId)
-                continue;
+            if (pKF2->mnRelocQuery != F->mnId) continue;
 
             accScore += pKF2->mRelocScore;
             if (pKF2->mRelocScore > bestScore)
@@ -916,8 +896,7 @@ vector<KeyFrame*> KeyFrameDatabase::DetectRelocalizationCandidates(Frame* F,
             }
         }
         lAccScoreAndMatch.push_back(make_pair(accScore, pBestKF));
-        if (accScore > bestAccScore)
-            bestAccScore = accScore;
+        if (accScore > bestAccScore) bestAccScore = accScore;
     }
 
     // Return all those keyframes with a score higher than 0.75*bestScore
@@ -933,8 +912,7 @@ vector<KeyFrame*> KeyFrameDatabase::DetectRelocalizationCandidates(Frame* F,
         if (si > minScoreToRetain)
         {
             KeyFrame* pKFi = it->second;
-            if (pKFi->GetMap() != pMap)
-                continue;
+            if (pKFi->GetMap() != pMap) continue;
             if (!spAlreadyAddedKF.count(pKFi))
             {
                 vpRelocCandidates.push_back(pKFi);

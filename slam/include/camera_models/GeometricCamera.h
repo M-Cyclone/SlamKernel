@@ -41,8 +41,7 @@ public:
     GeometricCamera() = default;
     GeometricCamera(const std::vector<float>& _vParameters)
         : mvParameters(_vParameters)
-    {
-    }
+    {}
     ~GeometricCamera() = default;
 
     virtual cv::Point2f     project(const cv::Point3f& p3D)     = 0;
@@ -55,16 +54,16 @@ public:
     virtual Eigen::Vector3f unprojectEig(const cv::Point2f& p2D) = 0;
     virtual cv::Point3f     unproject(const cv::Point2f& p2D)    = 0;
 
-    virtual Eigen::Matrix<double, 2, 3>
-    projectJac(const Eigen::Vector3d& v3D) = 0;
+    virtual Eigen::Matrix<double, 2, 3> projectJac(
+        const Eigen::Vector3d& v3D) = 0;
 
-    virtual bool
-    ReconstructWithTwoViews(const std::vector<cv::KeyPoint>& vKeys1,
-                            const std::vector<cv::KeyPoint>& vKeys2,
-                            const std::vector<int>&          vMatches12,
-                            Sophus::SE3f&                    T21,
-                            std::vector<cv::Point3f>&        vP3D,
-                            std::vector<bool>& vbTriangulated) = 0;
+    virtual bool ReconstructWithTwoViews(
+        const std::vector<cv::KeyPoint>& vKeys1,
+        const std::vector<cv::KeyPoint>& vKeys2,
+        const std::vector<int>&          vMatches12,
+        Sophus::SE3f&                    T21,
+        std::vector<cv::Point3f>&        vP3D,
+        std::vector<bool>&               vbTriangulated) = 0;
 
     virtual cv::Mat         toK()  = 0;
     virtual Eigen::Matrix3f toK_() = 0;
@@ -77,19 +76,10 @@ public:
                                    const float            sigmaLevel,
                                    const float            unc) = 0;
 
-    float getParameter(const int i)
-    {
-        return mvParameters[i];
-    }
-    void setParameter(const float p, const size_t i)
-    {
-        mvParameters[i] = p;
-    }
+    float getParameter(const int i) { return mvParameters[i]; }
+    void  setParameter(const float p, const size_t i) { mvParameters[i] = p; }
 
-    size_t size()
-    {
-        return mvParameters.size();
-    }
+    size_t size() { return mvParameters.size(); }
 
     virtual bool matchAndtriangulate(const cv::KeyPoint& kp1,
                                      const cv::KeyPoint& kp2,
@@ -100,15 +90,9 @@ public:
                                      const float         sigmaLevel2,
                                      Eigen::Vector3f&    x3Dtriangulated) = 0;
 
-    unsigned int GetId()
-    {
-        return mnId;
-    }
+    unsigned int GetId() { return mnId; }
 
-    unsigned int GetType()
-    {
-        return mnType;
-    }
+    unsigned int GetType() { return mnType; }
 
     const static unsigned int CAM_PINHOLE = 0;
     const static unsigned int CAM_FISHEYE = 1;

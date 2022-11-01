@@ -102,10 +102,11 @@ public:
     g2o::SE3Quat mTrl;
 };
 
-class EdgeSE3ProjectXYZ : public g2o::BaseBinaryEdge<2,
-                                                     Eigen::Vector2d,
-                                                     g2o::VertexSBAPointXYZ,
-                                                     g2o::VertexSE3Expmap>
+class EdgeSE3ProjectXYZ
+    : public g2o::BaseBinaryEdge<2,
+                                 Eigen::Vector2d,
+                                 g2o::VertexSBAPointXYZ,
+                                 g2o::VertexSE3Expmap>
 {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -189,17 +190,13 @@ public:
     virtual bool read(std::istream& is);
     virtual bool write(std::ostream& os) const;
 
-    virtual void setToOriginImpl()
-    {
-        _estimate = g2o::Sim3();
-    }
+    virtual void setToOriginImpl() { _estimate = g2o::Sim3(); }
 
     virtual void oplusImpl(const double* update_)
     {
         Eigen::Map<g2o::Vector7d> update(const_cast<double*>(update_));
 
-        if (_fix_scale)
-            update[6] = 0;
+        if (_fix_scale) update[6] = 0;
 
         g2o::Sim3 s(update);
         setEstimate(s * estimate());
@@ -258,9 +255,8 @@ public:
             static_cast<const g2o::VertexSBAPointXYZ*>(_vertices[0]);
 
         Eigen::Vector2d obs(_measurement);
-        _error = obs
-                 - v1->pCamera2->project(
-                     (v1->estimate().inverse().map(v2->estimate())));
+        _error = obs - v1->pCamera2->project(
+                           (v1->estimate().inverse().map(v2->estimate())));
     }
 
     // virtual void linearizeOplus();

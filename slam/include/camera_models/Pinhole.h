@@ -57,8 +57,7 @@ public:
 
     ~Pinhole()
     {
-        if (tvr)
-            delete tvr;
+        if (tvr) delete tvr;
     }
 
     cv::Point2f     project(const cv::Point3f& p3D);

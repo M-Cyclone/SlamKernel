@@ -125,10 +125,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const KannalaBrandt8& kb);
     friend std::istream& operator>>(std::istream& is, KannalaBrandt8& kb);
 
-    float GetPrecision()
-    {
-        return precision;
-    }
+    float GetPrecision() { return precision; }
 
     bool IsEqual(GeometricCamera* pCam);
 

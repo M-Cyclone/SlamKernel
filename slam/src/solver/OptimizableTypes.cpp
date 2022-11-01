@@ -34,15 +34,13 @@ bool EdgeSE3ProjectXYZOnlyPose::read(std::istream& is)
         for (int j = i; j < 2; j++)
         {
             is >> information()(i, j);
-            if (i != j)
-                information()(j, i) = information()(i, j);
+            if (i != j) information()(j, i) = information()(i, j);
         }
     return true;
 }
 
 bool EdgeSE3ProjectXYZOnlyPose::write(std::ostream& os) const
 {
-
     for (int i = 0; i < 2; i++)
     {
         os << measurement()[i] << " ";
@@ -83,15 +81,13 @@ bool EdgeSE3ProjectXYZOnlyPoseToBody::read(std::istream& is)
         for (int j = i; j < 2; j++)
         {
             is >> information()(i, j);
-            if (i != j)
-                information()(j, i) = information()(i, j);
+            if (i != j) information()(j, i) = information()(i, j);
         }
     return true;
 }
 
 bool EdgeSE3ProjectXYZOnlyPoseToBody::write(std::ostream& os) const
 {
-
     for (int i = 0; i < 2; i++)
     {
         os << measurement()[i] << " ";
@@ -120,8 +116,8 @@ void EdgeSE3ProjectXYZOnlyPoseToBody::linearizeOplus()
     SE3deriv << 0.f, z_w, -y_w, 1.f, 0.f, 0.f, -z_w, 0.f, x_w, 0.f, 1.f, 0.f,
         y_w, -x_w, 0.f, 0.f, 0.f, 1.f;
 
-    _jacobianOplusXi = -pCamera->projectJac(X_r)
-                       * mTrl.rotation().toRotationMatrix() * SE3deriv;
+    _jacobianOplusXi = -pCamera->projectJac(X_r) *
+                       mTrl.rotation().toRotationMatrix() * SE3deriv;
 }
 
 EdgeSE3ProjectXYZ::EdgeSE3ProjectXYZ()
@@ -129,8 +125,7 @@ EdgeSE3ProjectXYZ::EdgeSE3ProjectXYZ()
                      Eigen::Vector2d,
                      g2o::VertexSBAPointXYZ,
                      g2o::VertexSE3Expmap>()
-{
-}
+{}
 
 bool EdgeSE3ProjectXYZ::read(std::istream& is)
 {
@@ -142,15 +137,13 @@ bool EdgeSE3ProjectXYZ::read(std::istream& is)
         for (int j = i; j < 2; j++)
         {
             is >> information()(i, j);
-            if (i != j)
-                information()(j, i) = information()(i, j);
+            if (i != j) information()(j, i) = information()(i, j);
         }
     return true;
 }
 
 bool EdgeSE3ProjectXYZ::write(std::ostream& os) const
 {
-
     for (int i = 0; i < 2; i++)
     {
         os << measurement()[i] << " ";
@@ -194,8 +187,7 @@ EdgeSE3ProjectXYZToBody::EdgeSE3ProjectXYZToBody()
                      Eigen::Vector2d,
                      g2o::VertexSBAPointXYZ,
                      g2o::VertexSE3Expmap>()
-{
-}
+{}
 
 bool EdgeSE3ProjectXYZToBody::read(std::istream& is)
 {
@@ -207,15 +199,13 @@ bool EdgeSE3ProjectXYZToBody::read(std::istream& is)
         for (int j = i; j < 2; j++)
         {
             is >> information()(i, j);
-            if (i != j)
-                information()(j, i) = information()(i, j);
+            if (i != j) information()(j, i) = information()(i, j);
         }
     return true;
 }
 
 bool EdgeSE3ProjectXYZToBody::write(std::ostream& os) const
 {
-
     for (int i = 0; i < 2; i++)
     {
         os << measurement()[i] << " ";
@@ -252,8 +242,8 @@ void EdgeSE3ProjectXYZToBody::linearizeOplus()
     SE3deriv << 0.f, z, -y, 1.f, 0.f, 0.f, -z, 0.f, x, 0.f, 1.f, 0.f, y, -x,
         0.f, 0.f, 0.f, 1.f;
 
-    _jacobianOplusXj = -pCamera->projectJac(X_r)
-                       * mTrl.rotation().toRotationMatrix() * SE3deriv;
+    _jacobianOplusXj = -pCamera->projectJac(X_r) *
+                       mTrl.rotation().toRotationMatrix() * SE3deriv;
 }
 
 
@@ -316,8 +306,7 @@ EdgeSim3ProjectXYZ::EdgeSim3ProjectXYZ()
                           Eigen::Vector2d,
                           g2o::VertexSBAPointXYZ,
                           VertexSim3Expmap>()
-{
-}
+{}
 
 bool EdgeSim3ProjectXYZ::read(std::istream& is)
 {
@@ -330,8 +319,7 @@ bool EdgeSim3ProjectXYZ::read(std::istream& is)
         for (int j = i; j < 2; j++)
         {
             is >> information()(i, j);
-            if (i != j)
-                information()(j, i) = information()(i, j);
+            if (i != j) information()(j, i) = information()(i, j);
         }
     return true;
 }
@@ -356,8 +344,7 @@ EdgeInverseSim3ProjectXYZ::EdgeInverseSim3ProjectXYZ()
                           Eigen::Vector2d,
                           g2o::VertexSBAPointXYZ,
                           VertexSim3Expmap>()
-{
-}
+{}
 
 bool EdgeInverseSim3ProjectXYZ::read(std::istream& is)
 {
@@ -370,8 +357,7 @@ bool EdgeInverseSim3ProjectXYZ::read(std::istream& is)
         for (int j = i; j < 2; j++)
         {
             is >> information()(i, j);
-            if (i != j)
-                information()(j, i) = information()(i, j);
+            if (i != j) information()(j, i) = information()(i, j);
         }
     return true;
 }

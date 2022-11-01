@@ -160,13 +160,13 @@ private:
                   const Eigen::SparseMatrix<double>   Kll,
                   bool                                use_cov);
 
-    void
-    mlpnp_residuals_and_jacs(const Eigen::VectorXd&              x,
-                             const points_t&                     pts,
-                             const std::vector<Eigen::MatrixXd>& nullspaces,
-                             Eigen::VectorXd&                    r,
-                             Eigen::MatrixXd&                    fjac,
-                             bool                                getJacs);
+    void mlpnp_residuals_and_jacs(
+        const Eigen::VectorXd&              x,
+        const points_t&                     pts,
+        const std::vector<Eigen::MatrixXd>& nullspaces,
+        Eigen::VectorXd&                    r,
+        Eigen::MatrixXd&                    fjac,
+        bool                                getJacs);
 
     void mlpnpJacs(const point_t&         pt,
                    const Eigen::Vector3d& nullspace_r,

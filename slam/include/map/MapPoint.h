@@ -80,10 +80,7 @@ public:
     void       IncreaseVisible(int n = 1);
     void       IncreaseFound(int n = 1);
     float      GetFoundRatio();
-    inline int GetFound()
-    {
-        return mnFound;
-    }
+    inline int GetFound() { return mnFound; }
 
     void ComputeDistinctiveDescriptors();
 

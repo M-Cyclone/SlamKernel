@@ -60,12 +60,14 @@ Eigen::Vector3d LogSO3(const Eigen::Matrix3d& R);
 
 Eigen::Matrix3d InverseRightJacobianSO3(const Eigen::Vector3d& v);
 Eigen::Matrix3d RightJacobianSO3(const Eigen::Vector3d& v);
-Eigen::Matrix3d
-RightJacobianSO3(const double x, const double y, const double z);
+Eigen::Matrix3d RightJacobianSO3(const double x,
+                                 const double y,
+                                 const double z);
 
 Eigen::Matrix3d Skew(const Eigen::Vector3d& w);
-Eigen::Matrix3d
-InverseRightJacobianSO3(const double x, const double y, const double z);
+Eigen::Matrix3d InverseRightJacobianSO3(const double x,
+                                        const double y,
+                                        const double z);
 
 template <typename T = double>
 Eigen::Matrix<T, 3, 3> NormalizeRotation(const Eigen::Matrix<T, 3, 3>& R)
@@ -142,14 +144,8 @@ class VertexPose : public g2o::BaseVertex<6, ImuCamPose>
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     VertexPose() {}
-    VertexPose(KeyFrame* pKF)
-    {
-        setEstimate(ImuCamPose(pKF));
-    }
-    VertexPose(Frame* pF)
-    {
-        setEstimate(ImuCamPose(pF));
-    }
+    VertexPose(KeyFrame* pKF) { setEstimate(ImuCamPose(pKF)); }
+    VertexPose(Frame* pF) { setEstimate(ImuCamPose(pF)); }
 
 
     virtual bool read(std::istream& is);
@@ -170,28 +166,15 @@ class VertexPose4DoF : public g2o::BaseVertex<4, ImuCamPose>
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     VertexPose4DoF() {}
-    VertexPose4DoF(KeyFrame* pKF)
-    {
-        setEstimate(ImuCamPose(pKF));
-    }
-    VertexPose4DoF(Frame* pF)
-    {
-        setEstimate(ImuCamPose(pF));
-    }
+    VertexPose4DoF(KeyFrame* pKF) { setEstimate(ImuCamPose(pKF)); }
+    VertexPose4DoF(Frame* pF) { setEstimate(ImuCamPose(pF)); }
     VertexPose4DoF(Eigen::Matrix3d& _Rwc, Eigen::Vector3d& _twc, KeyFrame* pKF)
     {
-
         setEstimate(ImuCamPose(_Rwc, _twc, pKF));
     }
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     virtual void setToOriginImpl() {}
 
@@ -217,14 +200,8 @@ public:
     VertexVelocity(KeyFrame* pKF);
     VertexVelocity(Frame* pF);
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     virtual void setToOriginImpl() {}
 
@@ -244,14 +221,8 @@ public:
     VertexGyroBias(KeyFrame* pKF);
     VertexGyroBias(Frame* pF);
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     virtual void setToOriginImpl() {}
 
@@ -272,14 +243,8 @@ public:
     VertexAccBias(KeyFrame* pKF);
     VertexAccBias(Frame* pF);
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     virtual void setToOriginImpl() {}
 
@@ -300,10 +265,7 @@ public:
     GDirection() {}
     GDirection(Eigen::Matrix3d pRwg) : Rwg(pRwg) {}
 
-    void Update(const double* pu)
-    {
-        Rwg = Rwg * ExpSO3(pu[0], pu[1], 0.0);
-    }
+    void Update(const double* pu) { Rwg = Rwg * ExpSO3(pu[0], pu[1], 0.0); }
 
     Eigen::Matrix3d Rwg, Rgw;
 
@@ -315,19 +277,10 @@ class VertexGDir : public g2o::BaseVertex<2, GDirection>
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     VertexGDir() {}
-    VertexGDir(Eigen::Matrix3d pRwg)
-    {
-        setEstimate(GDirection(pRwg));
-    }
+    VertexGDir(Eigen::Matrix3d pRwg) { setEstimate(GDirection(pRwg)); }
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     virtual void setToOriginImpl() {}
 
@@ -343,28 +296,13 @@ class VertexScale : public g2o::BaseVertex<1, double>
 {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    VertexScale()
-    {
-        setEstimate(1.0);
-    }
-    VertexScale(double ps)
-    {
-        setEstimate(ps);
-    }
+    VertexScale() { setEstimate(1.0); }
+    VertexScale(double ps) { setEstimate(ps); }
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
-    virtual void setToOriginImpl()
-    {
-        setEstimate(1.0);
-    }
+    virtual void setToOriginImpl() { setEstimate(1.0); }
 
     virtual void oplusImpl(const double* update_)
     {
@@ -384,14 +322,8 @@ public:
         setEstimate(InvDepthPoint(invDepth, u, v, pHostKF));
     }
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     virtual void setToOriginImpl() {}
 
@@ -411,14 +343,8 @@ public:
 
     EdgeMono(int cam_idx_ = 0) : cam_idx(cam_idx_) {}
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void computeError()
     {
@@ -470,17 +396,10 @@ public:
 
     EdgeMonoOnlyPose(const Eigen::Vector3f& Xw_, int cam_idx_ = 0)
         : Xw(Xw_.cast<double>()), cam_idx(cam_idx_)
-    {
-    }
+    {}
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void computeError()
     {
@@ -517,14 +436,8 @@ public:
 
     EdgeStereo(int cam_idx_ = 0) : cam_idx(cam_idx_) {}
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void computeError()
     {
@@ -570,17 +483,10 @@ public:
 
     EdgeStereoOnlyPose(const Eigen::Vector3f& Xw_, int cam_idx_ = 0)
         : Xw(Xw_.cast<double>()), cam_idx(cam_idx_)
-    {
-    }
+    {}
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void computeError()
     {
@@ -609,14 +515,8 @@ public:
 
     EdgeInertial(IMU::Preintegrated* pInt);
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void         computeError();
     virtual void linearizeOplus();
@@ -673,14 +573,8 @@ public:
     // EdgeInertialGS(IMU::Preintegrated* pInt);
     EdgeInertialGS(IMU::Preintegrated* pInt);
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void         computeError();
     virtual void linearizeOplus();
@@ -772,14 +666,8 @@ public:
 
     EdgeGyroRW() {}
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void computeError()
     {
@@ -822,14 +710,8 @@ public:
 
     EdgeAccRW() {}
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void computeError()
     {
@@ -879,10 +761,9 @@ public:
         Eigen::SelfAdjointEigenSolver<Eigen::Matrix<double, 15, 15>> es(H);
         Eigen::Matrix<double, 15, 1> eigs = es.eigenvalues();
         for (int i = 0; i < 15; i++)
-            if (eigs[i] < 1e-12)
-                eigs[i] = 0;
-        H = es.eigenvectors() * eigs.asDiagonal()
-            * es.eigenvectors().transpose();
+            if (eigs[i] < 1e-12) eigs[i] = 0;
+        H = es.eigenvectors() * eigs.asDiagonal() *
+            es.eigenvectors().transpose();
     }
 
     Eigen::Matrix3d Rwb;
@@ -899,14 +780,8 @@ public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     EdgePriorPoseImu(ConstraintPoseImu* c);
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void         computeError();
     virtual void linearizeOplus();
@@ -945,17 +820,10 @@ public:
 
     EdgePriorAcc(const Eigen::Vector3f& bprior_)
         : bprior(bprior_.cast<double>())
-    {
-    }
+    {}
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void computeError()
     {
@@ -982,17 +850,10 @@ public:
 
     EdgePriorGyro(const Eigen::Vector3f& bprior_)
         : bprior(bprior_.cast<double>())
-    {
-    }
+    {}
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void computeError()
     {
@@ -1025,14 +886,8 @@ public:
         dtij = deltaT.block<3, 1>(0, 3);
     }
 
-    virtual bool read(std::istream& is)
-    {
-        return false;
-    }
-    virtual bool write(std::ostream& os) const
-    {
-        return false;
-    }
+    virtual bool read(std::istream& is) { return false; }
+    virtual bool write(std::ostream& os) const { return false; }
 
     void computeError()
     {
@@ -1040,13 +895,11 @@ public:
             static_cast<const VertexPose4DoF*>(_vertices[0]);
         const VertexPose4DoF* VPj =
             static_cast<const VertexPose4DoF*>(_vertices[1]);
-        _error << LogSO3(VPi->estimate().Rcw[0]
-                         * VPj->estimate().Rcw[0].transpose()
-                         * dRij.transpose()),
-            VPi->estimate().Rcw[0]
-                    * (-VPj->estimate().Rcw[0].transpose()
-                       * VPj->estimate().tcw[0])
-                + VPi->estimate().tcw[0] - dtij;
+        _error << LogSO3(VPi->estimate().Rcw[0] *
+                         VPj->estimate().Rcw[0].transpose() * dRij.transpose()),
+            VPi->estimate().Rcw[0] * (-VPj->estimate().Rcw[0].transpose() *
+                                      VPj->estimate().tcw[0]) +
+                VPi->estimate().tcw[0] - dtij;
     }
 
     // virtual void linearizeOplus(); // numerical implementation

@@ -24,7 +24,7 @@
 namespace ORB_SLAM3
 {
 
-std::vector<cv::Mat> Converter::toDescriptorVector(const cv::Mat &Descriptors)
+std::vector<cv::Mat> Converter::toDescriptorVector(const cv::Mat& Descriptors)
 {
     std::vector<cv::Mat> vDesc;
     vDesc.reserve(Descriptors.rows);
@@ -36,7 +36,7 @@ std::vector<cv::Mat> Converter::toDescriptorVector(const cv::Mat &Descriptors)
     return vDesc;
 }
 
-g2o::SE3Quat Converter::toSE3Quat(const cv::Mat &cvT)
+g2o::SE3Quat Converter::toSE3Quat(const cv::Mat& cvT)
 {
     assert(cvT.rows == 3);
     assert(cvT.cols == 3);
@@ -49,31 +49,32 @@ g2o::SE3Quat Converter::toSE3Quat(const cv::Mat &cvT)
     Eigen::Matrix<double, 3, 1> t(
         cvT.at<float>(0, 3), cvT.at<float>(1, 3), cvT.at<float>(2, 3));
 
-    return {R, t};
+    return { R, t };
 }
 
-g2o::SE3Quat Converter::toSE3Quat(const Sophus::SE3f &T)
+g2o::SE3Quat Converter::toSE3Quat(const Sophus::SE3f& T)
 {
-    return {T.unit_quaternion().cast<double>(), T.translation().cast<double>()};
+    return { T.unit_quaternion().cast<double>(),
+             T.translation().cast<double>() };
 }
 
-cv::Mat Converter::toCvMat(const g2o::SE3Quat &SE3)
+cv::Mat Converter::toCvMat(const g2o::SE3Quat& SE3)
 {
     Eigen::Matrix<double, 4, 4> eigMat = SE3.to_homogeneous_matrix();
     return toCvMat(eigMat);
 }
 
-cv::Mat Converter::toCvMat(const g2o::Sim3 &Sim3)
+cv::Mat Converter::toCvMat(const g2o::Sim3& Sim3)
 {
-    const Eigen::Matrix3d &eigR = Sim3.rotation().toRotationMatrix();
-    const Eigen::Vector3d &eigt = Sim3.translation();
+    const Eigen::Matrix3d& eigR = Sim3.rotation().toRotationMatrix();
+    const Eigen::Vector3d& eigt = Sim3.translation();
 
     double s = Sim3.scale();
 
     return toCvSE3(s * eigR, eigt);
 }
 
-cv::Mat Converter::toCvMat(const Eigen::Matrix<double, 4, 4> &m)
+cv::Mat Converter::toCvMat(const Eigen::Matrix<double, 4, 4>& m)
 {
     cv::Mat cvMat(4, 4, CV_32F);
     for (int i = 0; i < 4; i++)
@@ -87,7 +88,7 @@ cv::Mat Converter::toCvMat(const Eigen::Matrix<double, 4, 4> &m)
     return cvMat.clone();
 }
 
-cv::Mat Converter::toCvMat(const Eigen::Matrix<float, 4, 4> &m)
+cv::Mat Converter::toCvMat(const Eigen::Matrix<float, 4, 4>& m)
 {
     cv::Mat cvMat(4, 4, CV_32F);
     for (int i = 0; i < 4; i++)
@@ -101,7 +102,7 @@ cv::Mat Converter::toCvMat(const Eigen::Matrix<float, 4, 4> &m)
     return cvMat.clone();
 }
 
-cv::Mat Converter::toCvMat(const Eigen::Matrix<float, 3, 4> &m)
+cv::Mat Converter::toCvMat(const Eigen::Matrix<float, 3, 4>& m)
 {
     cv::Mat cvMat(3, 4, CV_32F);
     for (int i = 0; i < 3; i++)
@@ -115,7 +116,7 @@ cv::Mat Converter::toCvMat(const Eigen::Matrix<float, 3, 4> &m)
     return cvMat.clone();
 }
 
-cv::Mat Converter::toCvMat(const Eigen::Matrix3d &m)
+cv::Mat Converter::toCvMat(const Eigen::Matrix3d& m)
 {
     cv::Mat cvMat(3, 3, CV_32F);
     for (int i = 0; i < 3; i++)
@@ -129,7 +130,7 @@ cv::Mat Converter::toCvMat(const Eigen::Matrix3d &m)
     return cvMat.clone();
 }
 
-cv::Mat Converter::toCvMat(const Eigen::Matrix3f &m)
+cv::Mat Converter::toCvMat(const Eigen::Matrix3f& m)
 {
     cv::Mat cvMat(3, 3, CV_32F);
     for (int i = 0; i < 3; i++)
@@ -143,7 +144,7 @@ cv::Mat Converter::toCvMat(const Eigen::Matrix3f &m)
     return cvMat.clone();
 }
 
-cv::Mat Converter::toCvMat(const Eigen::MatrixXf &m)
+cv::Mat Converter::toCvMat(const Eigen::MatrixXf& m)
 {
     cv::Mat cvMat((int)m.rows(), (int)m.cols(), CV_32F);
     for (int i = 0; i < m.rows(); i++)
@@ -157,7 +158,7 @@ cv::Mat Converter::toCvMat(const Eigen::MatrixXf &m)
     return cvMat.clone();
 }
 
-cv::Mat Converter::toCvMat(const Eigen::MatrixXd &m)
+cv::Mat Converter::toCvMat(const Eigen::MatrixXd& m)
 {
     cv::Mat cvMat((int)m.rows(), (int)m.cols(), CV_32F);
     for (int i = 0; i < m.rows(); i++)
@@ -171,7 +172,7 @@ cv::Mat Converter::toCvMat(const Eigen::MatrixXd &m)
     return cvMat.clone();
 }
 
-cv::Mat Converter::toCvMat(const Eigen::Matrix<double, 3, 1> &m)
+cv::Mat Converter::toCvMat(const Eigen::Matrix<double, 3, 1>& m)
 {
     cv::Mat cvMat(3, 1, CV_32F);
     for (int i = 0; i < 3; i++)
@@ -182,7 +183,7 @@ cv::Mat Converter::toCvMat(const Eigen::Matrix<double, 3, 1> &m)
     return cvMat.clone();
 }
 
-cv::Mat Converter::toCvMat(const Eigen::Matrix<float, 3, 1> &m)
+cv::Mat Converter::toCvMat(const Eigen::Matrix<float, 3, 1>& m)
 {
     cv::Mat cvMat(3, 1, CV_32F);
     for (int i = 0; i < 3; i++)
@@ -193,8 +194,8 @@ cv::Mat Converter::toCvMat(const Eigen::Matrix<float, 3, 1> &m)
     return cvMat.clone();
 }
 
-cv::Mat Converter::toCvSE3(const Eigen::Matrix<double, 3, 3> &R,
-                           const Eigen::Matrix<double, 3, 1> &t)
+cv::Mat Converter::toCvSE3(const Eigen::Matrix<double, 3, 3>& R,
+                           const Eigen::Matrix<double, 3, 1>& t)
 {
     cv::Mat cvMat = cv::Mat::eye(4, 4, CV_32F);
     for (int i = 0; i < 3; i++)
@@ -212,7 +213,7 @@ cv::Mat Converter::toCvSE3(const Eigen::Matrix<double, 3, 3> &R,
     return cvMat.clone();
 }
 
-Eigen::Matrix<double, 3, 1> Converter::toVector3d(const cv::Mat &cvVector)
+Eigen::Matrix<double, 3, 1> Converter::toVector3d(const cv::Mat& cvVector)
 {
     assert(cvVector.rows == 3);
     assert(cvVector.cols == 1);
@@ -223,7 +224,7 @@ Eigen::Matrix<double, 3, 1> Converter::toVector3d(const cv::Mat &cvVector)
     return v;
 }
 
-Eigen::Matrix<float, 3, 1> Converter::toVector3f(const cv::Mat &cvVector)
+Eigen::Matrix<float, 3, 1> Converter::toVector3f(const cv::Mat& cvVector)
 {
     assert(cvVector.rows == 3);
     assert(cvVector.cols == 1);
@@ -234,7 +235,7 @@ Eigen::Matrix<float, 3, 1> Converter::toVector3f(const cv::Mat &cvVector)
     return v;
 }
 
-Eigen::Matrix<double, 3, 1> Converter::toVector3d(const cv::Point3f &cvPoint)
+Eigen::Matrix<double, 3, 1> Converter::toVector3d(const cv::Point3f& cvPoint)
 {
     Eigen::Matrix<double, 3, 1> v;
     v << cvPoint.x, cvPoint.y, cvPoint.z;
@@ -242,7 +243,7 @@ Eigen::Matrix<double, 3, 1> Converter::toVector3d(const cv::Point3f &cvPoint)
     return v;
 }
 
-Eigen::Matrix<double, 3, 3> Converter::toMatrix3d(const cv::Mat &cvMat3)
+Eigen::Matrix<double, 3, 3> Converter::toMatrix3d(const cv::Mat& cvMat3)
 {
     assert(cvMat3.rows == 3);
     assert(cvMat3.cols == 3);
@@ -256,7 +257,7 @@ Eigen::Matrix<double, 3, 3> Converter::toMatrix3d(const cv::Mat &cvMat3)
     return M;
 }
 
-Eigen::Matrix<double, 4, 4> Converter::toMatrix4d(const cv::Mat &cvMat4)
+Eigen::Matrix<double, 4, 4> Converter::toMatrix4d(const cv::Mat& cvMat4)
 {
     assert(cvMat4.rows == 4);
     assert(cvMat4.cols == 4);
@@ -273,7 +274,7 @@ Eigen::Matrix<double, 4, 4> Converter::toMatrix4d(const cv::Mat &cvMat4)
     return M;
 }
 
-Eigen::Matrix<float, 3, 3> Converter::toMatrix3f(const cv::Mat &cvMat3)
+Eigen::Matrix<float, 3, 3> Converter::toMatrix3f(const cv::Mat& cvMat3)
 {
     assert(cvMat3.rows == 3);
     assert(cvMat3.cols == 3);
@@ -287,7 +288,7 @@ Eigen::Matrix<float, 3, 3> Converter::toMatrix3f(const cv::Mat &cvMat3)
     return M;
 }
 
-Eigen::Matrix<float, 4, 4> Converter::toMatrix4f(const cv::Mat &cvMat4)
+Eigen::Matrix<float, 4, 4> Converter::toMatrix4f(const cv::Mat& cvMat4)
 {
     assert(cvMat4.rows == 4);
     assert(cvMat4.cols == 4);
@@ -304,7 +305,7 @@ Eigen::Matrix<float, 4, 4> Converter::toMatrix4f(const cv::Mat &cvMat4)
     return M;
 }
 
-std::vector<float> Converter::toQuaternion(const cv::Mat &M)
+std::vector<float> Converter::toQuaternion(const cv::Mat& M)
 {
     assert(M.rows == 3);
     assert(M.cols == 3);
@@ -313,12 +314,13 @@ std::vector<float> Converter::toQuaternion(const cv::Mat &M)
     Eigen::Quaterniond          q(eigMat);
 
     std::vector<float> v{
-        (float)q.x(), (float)q.y(), (float)q.z(), (float)q.w()};
+        (float)q.x(), (float)q.y(), (float)q.z(), (float)q.w()
+    };
 
     return v;
 }
 
-cv::Mat Converter::tocvSkewMatrix(const cv::Mat &v)
+cv::Mat Converter::tocvSkewMatrix(const cv::Mat& v)
 {
     assert(v.rows == 3);
     assert(v.cols == 1);
@@ -334,7 +336,7 @@ cv::Mat Converter::tocvSkewMatrix(const cv::Mat &v)
                                 0);
 }
 
-bool Converter::isRotationMatrix(const cv::Mat &R)
+bool Converter::isRotationMatrix(const cv::Mat& R)
 {
     assert(R.rows == 3);
     assert(R.cols == 3);
@@ -347,14 +349,14 @@ bool Converter::isRotationMatrix(const cv::Mat &R)
     return cv::norm(I, shouldBeIdentity) < 1e-6;
 }
 
-std::vector<float> Converter::toEuler(const cv::Mat &R)
+std::vector<float> Converter::toEuler(const cv::Mat& R)
 {
     assert(R.rows == 3);
     assert(R.cols == 3);
     assert(isRotationMatrix(R));
 
-    float sy = std::sqrt(R.at<float>(0, 0) * R.at<float>(0, 0)
-                         + R.at<float>(1, 0) * R.at<float>(1, 0));
+    float sy = std::sqrt(R.at<float>(0, 0) * R.at<float>(0, 0) +
+                         R.at<float>(1, 0) * R.at<float>(1, 0));
 
     float x, y, z;
     if (sy >= 1e-6)  // singular
@@ -370,10 +372,10 @@ std::vector<float> Converter::toEuler(const cv::Mat &R)
         z = 0;
     }
 
-    return {x, y, z};
+    return { x, y, z };
 }
 
-Sophus::SE3<float> Converter::toSophus(const cv::Mat &T)
+Sophus::SE3<float> Converter::toSophus(const cv::Mat& T)
 {
     assert(T.rows == 4);
     assert(T.cols == 4);
@@ -385,14 +387,15 @@ Sophus::SE3<float> Converter::toSophus(const cv::Mat &T)
     Eigen::Matrix<float, 3, 1> t =
         toVector3d(T.rowRange(0, 3).col(3)).cast<float>();
 
-    return {q, t};
+    return { q, t };
 }
 
-Sophus::Sim3f Converter::toSophus(const g2o::Sim3 &S)
+Sophus::Sim3f Converter::toSophus(const g2o::Sim3& S)
 {
     return {
         Sophus::RxSO3d((float)S.scale(), S.rotation().matrix()).cast<float>(),
-        S.translation().cast<float>()};
+        S.translation().cast<float>()
+    };
 }
 
 }  // namespace ORB_SLAM3
